@@ -1,0 +1,164 @@
+@import "../../scssVariblesFunction.scss";
+
+$CornerPadding: 5px 10px;
+$btwPadding: 5px;
+$btnWidth: 50%;
+$btnHeight: 27px;
+
+main.cardnote-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  place-items: center;
+  visibility: none;
+  touch-action: none;
+  transform: scale(0);
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s;
+  z-index: 1000;
+
+  .background {
+    @include hw;
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 101;
+  }
+  .modal {
+    z-index: 101;
+    background-color: #fff;
+    border-radius: 5px;
+    position: relative;
+    min-width: 300px;
+    width: 80vw;
+    max-width: 500px;
+    transition: 5s ease;
+    box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.1);
+
+    .header {
+      user-select: none;
+      padding: 0 10px;
+      position: relative;
+      font-size: 20px;
+      height: 30px;
+      @include montFont;
+      @include flex(space-between);
+      p {
+        text-transform: capitalize;
+      }
+      // transition: all 5s linear;
+      .switch-btn {
+        @include flex;
+        gap: 10px;
+        position: relative;
+        height: 100%;
+        // overflow: hidden;
+        p {
+          font-size: 16px;
+          color: rgb(99, 90, 90);
+          cursor: pointer;
+          &:hover {
+            color: black;
+          }
+        }
+        .pactive {
+          color: black;
+        }
+        span {
+          position: absolute;
+          background-color: #8cc63f;
+          // 38
+          // 52
+          height: 0;
+          bottom: 0;
+          $px: 20px;
+          @include borderRadius($px, $px);
+          transition: all 0.2s ease;
+        }
+        .left {
+          right: 61px;
+          height: 2.5px;
+          width: 38px;
+        }
+        .right {
+          width: 52px;
+          height: 2.5px;
+          right: 0;
+        }
+      }
+    }
+  }
+  .modal {
+    $padding: 0 10px;
+    .header {
+      @include montFont;
+      @include flex(space-between);
+      height: 30px;
+      border-bottom: 2px solid #8cc63f;
+      padding: $padding;
+    }
+    .container {
+      padding: 10px 10px;
+      p {
+        @include flex;
+        @include montFont;
+        min-height: 50px;
+      }
+      .align {
+        display: flex;
+        justify-content: flex-end;
+        .buttons {
+          width: 50%;
+          display: flex;
+          justify-content: flex-end;
+          gap: 4px;
+          .yes {
+            @include montFont;
+            cursor: pointer;
+            padding: 2px 10px;
+            background-color: #8cc63f;
+            border-radius: 4px;
+            width: $btnWidth;
+            border: none;
+            color: white;
+            font-weight: bold;
+            height: $btnHeight;
+          }
+          .no {
+            @include montFont;
+            cursor: pointer;
+            height: $btnHeight;
+            border-radius: 4px;
+            width: $btnWidth;
+            padding: 2px 10px;
+            color: #858585;
+            background-color: white;
+            border: 1px solid #858585;
+          }
+        }
+      }
+    }
+  }
+}
+
+main.cardnote-active {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+::placeholder {
+  @include montFont;
+}
+
+.active {
+  display: block;
+}
+.not-active {
+  display: none;
+}

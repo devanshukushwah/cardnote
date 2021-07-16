@@ -1,0 +1,44 @@
+@import "../../../../scssVariblesFunction.scss";
+$btnWidth: 75px;
+$btnHeight: 27px;
+.align {
+  display: flex;
+  justify-content: flex-end;
+  div {
+    // width: 50%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 4px;
+
+    button {
+      @include montFont;
+      cursor: pointer;
+      height: $btnHeight;
+      border-radius: 4px;
+      min-width: $btnWidth;
+      font-weight: bold;
+      @include flex(center);
+    }
+
+    button:nth-child(1) {
+      color: #858585;
+      border: 1px solid #858585;
+      background-color: white;
+      &:hover {
+        color: black;
+        border: 1px solid black;
+      }
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+    button:nth-child(2) {
+      background-color: #8cc63f;
+      border: none;
+      color: white;
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}

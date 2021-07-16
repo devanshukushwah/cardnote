@@ -1,0 +1,74 @@
+$icon-size: 120px;
+@import "../../scssVariblesFunction.scss";
+header.cardNote {
+  margin: $cardnote-total-rows-gap $cardnote-total-side-gap;
+  position: relative;
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 5px 10px;
+  background-color: #fff;
+  height: 65px;
+  overflow: hidden;
+  @include border;
+  border-bottom: 4px solid #8cc63f;
+  @include flex(space-between);
+  @include borderRadius(10px, 10px);
+  .icon {
+    width: $icon-size;
+  }
+  .my-account {
+    user-select: none;
+    position: relative;
+    $avtarSize: 45px;
+    .photo {
+      position: relative;
+      z-index: 1;
+      @include hw($avtarSize, $avtarSize);
+      @include flex;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      p {
+        text-transform: uppercase;
+      }
+    }
+    .not-photo {
+      position: relative;
+      z-index: 1;
+      @include hw(50px, 50px);
+      @include flex;
+      border-radius: 50%;
+      background-color: #333;
+      color: white;
+      @include montFont;
+      font-size: 25px;
+      cursor: pointer;
+      p {
+        text-transform: uppercase;
+      }
+    }
+    .active {
+      width: 100%;
+      height: 100%;
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      z-index: 0;
+      background-color: rgb(230, 204, 204);
+      border-radius: 50%;
+      box-sizing: border-box;
+      cursor: pointer;
+      transform: translate(-50%, -50%) scale(1.2);
+      transition: all 0.2s linear;
+    }
+    .focus {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .icon {
+      width: 100px;
+    }
+  }
+}

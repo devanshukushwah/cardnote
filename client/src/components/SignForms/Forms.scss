@@ -1,0 +1,220 @@
+@import "../../scssVariblesFunction.scss";
+.bgColor {
+  position: fixed;
+  @include hw(100vh, 100vw);
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.carnote-homepage-auth {
+  overflow: hidden;
+  min-height: 450px;
+  @include flex;
+  background-color: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 5px;
+  border-radius: 5px;
+  min-width: 300px;
+  width: 70vw;
+  @include boxShadow;
+  .X-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    padding: 5px;
+    border-radius: 50%;
+    margin: 5px 5px 0 0;
+    color: #606060;
+    transition: background-color 0.2s;
+    font-size: 18px;
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+  .wave {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: -10;
+    height: 400px;
+  }
+  .left {
+    flex: 1;
+    @include flex(center);
+    .guy {
+      height: 250px;
+    }
+  }
+  .right {
+    @include flex(center);
+    flex: 1;
+    flex-direction: column;
+    position: relative;
+    padding: 0 50px;
+    .googleauth {
+      cursor: pointer;
+      background: #ffffff;
+      border: 1px solid #e8d8d8;
+      box-sizing: border-box;
+      border-radius: 5px;
+      height: 35.75px;
+      width: 100%;
+      padding: 0 10px;
+      @include flex(center);
+      font-size: 20px;
+      gap: 4px;
+      @include montFont;
+      p {
+        font-size: 1rem;
+        font-family: "Roboto", "san-serif";
+        font-weight: normal;
+      }
+    }
+    .line-box {
+      user-select: none;
+      position: relative;
+      width: 100%;
+      height: 25px;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      .line {
+        height: 0px;
+        border: 1px solid #858585;
+      }
+      p {
+        @include flex;
+        padding: 0 10px;
+        @include montFont;
+        font-size: 11px;
+        color: #858585;
+        word-wrap: none;
+      }
+    }
+    h2 {
+      // text-align: center;
+      @include robotoFont();
+      font-weight: lighter;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+
+      div {
+        gap: 8px;
+        display: flex;
+      }
+
+      input[type]:not([type="checkbox"]) {
+        background: #ffffff;
+        border: 1px solid #e8d8d8;
+        box-sizing: border-box;
+        border-radius: 5px;
+        height: 35.75px;
+        width: 100%;
+        padding: 0 10px;
+        font-size: 15px;
+        &::placeholder {
+          user-select: none;
+          font-size: 1rem;
+          font-family: "Roboto", "san-serif";
+          font-weight: normal;
+        }
+        &:focus {
+          border: 1px solid rgb(106, 106, 228);
+        }
+      }
+      .rememberForget {
+        @include flex(space-between);
+        user-select: none;
+        @include robotoFont;
+        div {
+          @include flex;
+          input {
+            cursor: pointer;
+          }
+          label {
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+          }
+        }
+        .p {
+          color: #333;
+          font-size: 12px;
+          cursor: pointer;
+          text-decoration: none;
+        }
+      }
+
+      button {
+        height: 35.75px;
+        color: white;
+        @include montFont;
+        font-size: 18px;
+        // padding: 50px;
+        background: #8cc63f;
+        border: 1px solid #e8d8d8;
+        box-sizing: border-box;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        @include flex;
+        &:focus {
+          border: 1px solid blue;
+        }
+        &:disabled {
+          cursor: not-allowed;
+          border: 1px solid #999999;
+          background-color: #cccccc;
+          color: #666666;
+        }
+      }
+      div {
+        @include flex;
+        font-size: 1rem;
+        font-family: "Roboto", "san-serif";
+        font-weight: normal;
+        gap: 5px;
+        user-select: none;
+        p:nth-child(2) {
+          @include removeTextUnderline;
+          * {
+            color: #333fa7;
+          }
+          cursor: pointer;
+        }
+      }
+      .password {
+        position: relative;
+        @include flex(flex-end);
+        &:hover {
+          span {
+            display: flex;
+          }
+        }
+
+        span {
+          display: none;
+          padding: 0 10px;
+          font-size: 20px;
+          background-color: transparent;
+          position: absolute;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 750px) {
+    .left {
+      display: none;
+    }
+    .right {
+      padding: 0 20px;
+    }
+  }
+}

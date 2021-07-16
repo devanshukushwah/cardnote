@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat");
+@import url("https://fonts.googleapis.com/css2?family=Roboto");
+
+@mixin flex($type: center) {
+  display: flex;
+  align-items: center;
+  justify-content: $type;
+}
+
+@mixin card($radius: 4px, $borderColor: #e7e7e7, $level: 0.25) {
+  background-color: white;
+  border-radius: $radius;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, $level);
+  border: 1px solid $borderColor;
+}
+
+@mixin border($borderColor: #e7e7e7) {
+  border: 1px solid $borderColor;
+}
+@mixin boxShadow($level: 0.25) {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, $level);
+}
+
+@mixin hw($height: 100%, $width: 100%) {
+  height: $height;
+  width: $width;
+}
+
+@mixin removeTextUnderline {
+  * {
+    text-decoration: none;
+  }
+}
+
+@mixin borderRadius(
+  $topLeft: 0,
+  $topRight: 0,
+  $bottomRight: 0,
+  $bottomLeft: 0
+) {
+  border-top-left-radius: $topLeft;
+  border-top-right-radius: $topRight;
+  border-bottom-right-radius: $bottomRight;
+  border-bottom-left-radius: $bottomLeft;
+}
+
+@mixin montFont {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+}
+@mixin robotoFont {
+  font-family: "roboto", "sans-serif";
+}
+@mixin boxShadow {
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes slideIn {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+// FOR CARDNOTE
+$cardnote-total-rows-gap: 5px;
+$cardnote-total-side-gap: 5px;

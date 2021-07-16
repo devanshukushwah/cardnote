@@ -1,0 +1,151 @@
+@import "../../scssVariblesFunction.scss";
+
+$gap: 5px;
+
+@mixin selected {
+  .selected {
+    border: 1px solid rgb(85, 85, 218);
+    box-shadow: 0 0 2px rgba(85, 85, 218, 1);
+  }
+}
+@mixin tick {
+  .tick-on {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 20px;
+    color: rgb(85, 85, 218);
+  }
+  .tick-off {
+    display: none;
+  }
+}
+
+@mixin cardshadow {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+@mixin popAnimation {
+  animation: popIn 0.2s linear forwards;
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+main.Cardnote-container {
+  padding: 0 $cardnote-total-side-gap;
+  position: relative;
+  z-index: 1;
+
+  .Cardnote-Folders {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $gap;
+    grid-auto-rows: minmax(38px, auto);
+    padding-bottom: $cardnote-total-rows-gap;
+
+    @include selected();
+    article {
+      user-select: none;
+      background-color: #fff;
+      @include border;
+      border-radius: 4px;
+      padding: 2px 10px;
+      @include flex(left);
+      gap: 4px;
+      cursor: pointer;
+      position: relative;
+      @include popAnimation();
+      .icon {
+        font-size: 24px;
+        color: #8cc63f;
+      }
+      p {
+        // @include montFont;
+        font-family: "Roboto", "san-serif";
+        font-size: 1rem;
+        max-width: inherit;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+      }
+      @include tick;
+      &:active {
+        transform: scale(0.99);
+        @include cardshadow;
+      }
+    }
+  }
+
+  .Cardnote-Cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $gap;
+    padding-bottom: $cardnote-total-rows-gap;
+    grid-auto-rows: minmax(90px, auto);
+    user-select: none;
+
+    @include selected();
+    article {
+      cursor: pointer;
+      background-color: #fff;
+      @include border;
+      border-radius: 4px;
+      padding: 2px 10px;
+      @include flex;
+      gap: 4px;
+      position: relative;
+      @include popAnimation();
+
+      &:active {
+        @include cardshadow;
+      }
+      p {
+        // @include montFont;
+        font-family: "Roboto", "san-serif";
+        font-size: 1rem;
+      }
+      @include tick;
+      .tick-on {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 20px;
+      }
+      .tick-off {
+        display: none;
+      }
+    }
+    article:active {
+      transform: scale(0.99);
+    }
+  }
+  @media screen and (max-width: 1250px) {
+    .col-folder,
+    .col-card {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .col-card {
+      grid-template-columns: 1fr 1fr;
+    }
+    .col-folder {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .col-card {
+      grid-template-columns: 1fr;
+    }
+    .col-folder {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}

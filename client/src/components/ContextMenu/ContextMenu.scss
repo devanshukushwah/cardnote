@@ -1,0 +1,45 @@
+@import "../../scssVariblesFunction.scss";
+.cardnote-contextMenu {
+  position: fixed;
+  background-color: white;
+  border: 1px solid #e7e7e7;
+  padding: 10px 0;
+  border-radius: 4px;
+  top: 0;
+  left: 0;
+  min-width: 150px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.1s linear 1 forwards;
+  transform-origin: top;
+
+  button {
+    padding: 0 20px;
+    width: 100%;
+    height: 30px;
+    background-color: transparent;
+    gap: 5px;
+    color: #333;
+    border: none;
+    font-size: 18px;
+    // @include montFont;
+    font-family: "roboto";
+    @include flex(flex-start);
+    &:hover {
+      background-color: #f9f6f7;
+    }
+    p {
+      font-size: 15px;
+      @include flex;
+    }
+  }
+}
+
+div.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  background-color: transparent;
+  opacity: 0.5;
+  height: 100vh;
+}
