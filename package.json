@@ -1,0 +1,21 @@
+{
+  "name": "cardnote",
+  "version": "1.0.0",
+  "description": "save notes in the form of card",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "author": "devanshu kushwah",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.12",
+    "nodemailer": "^6.6.2",
+    "nodemailer-sendgrid-transport": "^0.2.0"
+  }
+}

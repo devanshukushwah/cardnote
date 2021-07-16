@@ -1,0 +1,102 @@
+### fetch all data
+GET http://localhost:5000/cardnote-api
+
+### fetch all trash data
+GET http://localhost:5000/cardnote-api/trash
+
+### fetch one data
+GET http://localhost:5000/cardnote-api/homepage
+
+###
+PUT http://localhost:5000/cardnote-api/trash
+Content-Type: application/json
+
+{
+    "type":"folder",
+    "idList":["60b4c7edbb5c5f36cc699b1b"]
+}
+
+###
+DELETE http://localhost:5000/cardnote-api/
+Content-Type: application/json
+
+{
+    "id":"homepage",
+    "deletelist":["60b8d41f6aa4b32e60a003ec","60b8d41f6aa4b32e60a003ed","60b8d41f6aa4b32e60a003ee","60b8d4206aa4b32e60a003ef","60b8d4236aa4b32e60a003f4","60b8d4216aa4b32e60a003f0","60b8d4216aa4b32e60a003f1","60b8d4216aa4b32e60a003f2","60b8d4226aa4b32e60a003f3"]
+}
+###
+"folderlist":["60b4c7edbb5c5f36cc699b1b"],
+### push folder 
+POST http://localhost:5000/cardnote-api
+Content-Type: application/json
+
+{
+    "title":"dadu1",
+    "type":"folder",
+    "id":"60ba68a69dcefb15140b3321"
+}
+
+###
+
+POST http://localhost:5000/cardnote-api
+Content-Type: application/json
+
+{
+    "title":"face",
+    "data":"back",
+    "type":"card",
+    "id":"60b8d5830d1b7833184ea7fd"
+}
+###
+POST http://localhost:5000/cardnote-api
+Content-Type: application/json
+
+{
+    "title":"dadu5",
+    "type":"folder",
+    "id":"homepage"
+}
+
+### push card
+POST http://localhost:5000/cardnote-api
+Content-Type: application/json
+
+{
+    "title":"face",
+    "data":"back",
+    "type":"card",
+    "id":"homepage"
+}
+### move to trash
+PUT http://localhost:5000/cardnote-api/trash
+Content-Type: application/json
+
+{
+   "itemlist":["60bf53111858014084956d59"] 
+}
+
+### restore to trash
+PUT http://localhost:5000/cardnote-api/restore
+Content-Type: application/json
+
+{
+   "itemlist":["60b8d5830d1b7833184ea7fd","60b8d5c00d1b7833184ea804","60b8d5c00d1b7833184ea803","60b8d5c10d1b7833184ea807","60b8d5d30d1b7833184ea80d","60b8d5be0d1b7833184ea7ff"] 
+}
+
+### rename folder
+PUT http://localhost:5000/cardnote-api/folder
+Content-Type: application/json
+
+{
+    "id":"60b8d5830d1b7833184ea7fd",
+    "newtitle":"dadu"
+}
+### rename card
+PUT http://localhost:5000/cardnote-api/card
+Content-Type: application/json
+
+{
+"id":"60b8d5bd0d1b7833184ea7fe",
+    "newtitle":"dadu",
+    "newdata":"dadu2"
+}
