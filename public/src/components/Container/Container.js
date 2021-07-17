@@ -7,6 +7,7 @@ import SkeletonLoader from "../SkeletonLoader/SkeletonLoader"
 import "./Container.scss"
 import { FaFolder } from "react-icons/fa"
 import { TiTick } from "react-icons/ti"
+import Empty from "../Empty/Empty"
 
 function Folders() {
   const {
@@ -86,7 +87,7 @@ function Cards() {
 }
 
 function Container() {
-  const { contextMenuCordinate, isLoading, showBarCordinate } =
+  const { contextMenuCordinate, isLoading, showBarCordinate, folders, cards } =
     useGlobalContext()
 
   return (
@@ -95,6 +96,7 @@ function Container() {
         <SkeletonLoader />
       ) : (
         <>
+          {!(folders.length + cards.length) && <Empty />}
           <Folders />
           <Cards />
           {contextMenuCordinate.show && <ContextMenu />}
