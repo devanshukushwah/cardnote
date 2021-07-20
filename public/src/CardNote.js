@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 import Container from "./components/Container/Container"
-import DirectoryBar from "./components/DirectoryBar/DirectoryBar"
+// import DirectoryBar from "./components/Bar/DirectoryBar"
 import MenuBar from "./components/MenuBar/MenuBar"
 import Modal from "./components/Modal/Modal"
 import TopHeader from "./components/TopHeader/TopHeader"
 import { GlobalProvider } from "./contextAPI/useContext"
+import Bar from "./components/Bar/Bar"
 
 function Cardnote() {
   useEffect(() => {
@@ -18,7 +19,7 @@ function Cardnote() {
     <>
       <GlobalProvider>
         <TopHeader />
-        <DirectoryBar />
+        <Bar />
         <Container />
         <MenuBar />
         <Modal />

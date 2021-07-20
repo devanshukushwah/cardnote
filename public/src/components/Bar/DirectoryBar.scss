@@ -183,3 +183,12 @@ main.DirectoryBar {
 main.scrollOn {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.homebutton {
+  padding: 2px 5px;
+  transition: 0.2s;
+  border-radius: 4px;
+  &:hover {
+    background-color: #eeeeee;
+  }
+}

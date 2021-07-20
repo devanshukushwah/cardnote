@@ -4,12 +4,12 @@ import styles from "./CreateCancel.module.scss"
 import CirculareLoader from "../../../CirculareLoader/CirculareLoader"
 
 function CreateCancel() {
-  const { handleCancel, isSubmitLoading } = useGlobalContext()
+  const { closeModal, isSubmitLoading } = useGlobalContext()
   return (
     <>
       <div className={styles.align}>
         <div>
-          <button type="button" onClick={handleCancel}>
+          <button type="button" onClick={closeModal}>
             Cancel
           </button>
           <button type="submit" disabled={isSubmitLoading}>

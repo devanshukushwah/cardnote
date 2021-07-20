@@ -1,6 +1,5 @@
 import React from "react"
 import "./css/HomePage.scss"
-import { Sign } from "./components/SignForms/Sign"
 import { Link, useHistory } from "react-router-dom"
 import { ReactComponent as Logo } from "./images/logo.svg"
 import { ReactComponent as Wave } from "./images/bgWave.svg"

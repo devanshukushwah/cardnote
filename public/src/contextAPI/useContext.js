@@ -1,171 +1,222 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useReducer } from "react"
+import axios from "axios"
 import { useParams } from "react-router-dom"
+import { API_URL } from "../config/apiConfig"
 import { jsPDF } from "jspdf"
-
-// API
-import {
-  getData,
-  postFolder,
-  postCard,
-  reqDeleteOneFromServer,
-  reqRenameFolderFromServer,
-  reqRenameCardFromServer,
-  reqDeleteFromServer,
-} from "../api/index"
+import { reducer } from "./reducer"
 
 const Consumer = React.createContext()
 
-export const GlobalProvider = ({ children }) => {
-  const { id } = useParams()
-  const [dirPath, setDirPath] = useState([
-    { title: "Homepage", page: "homepage" },
-  ])
-  const [folders, setFolders] = useState([])
-  const [cards, setCards] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [isSubmitLoading, setIsSubmitLoading] = useState(false)
-  const [isModal, setIsModal] = useState(false)
-  const [modalType, setModalType] = React.useState("card")
-  const [isDelete, setIsDelete] = useState(false)
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")))
-  const [popType, setPopType] = useState("delete")
-  const [showBarCordinate, setShowBarCordinate] = useState({
-    x: "980.503",
-    y: "128.336",
-    type: "nothing",
-    show: false,
-  })
-  const [contextMenuCordinate, setContextMenuCordinate] = useState({
+const defaultState = {
+  folders: [],
+  cards: [],
+  dirPath: [{ title: "Home", page: "homepage" }],
+  user: JSON.parse(localStorage.getItem("profile")),
+  isLoading: true,
+  isSubmitLoading: false,
+  isModal: false,
+  isMenuBar: false,
+  isDelete: false,
+  isRestore: false,
+  clicked: 0,
+  modalType: "card",
+  popType: "delete",
+  contextMenuCordinate: {
     x: "0",
     y: "0",
     id: null,
     show: false,
     type: "folder",
-  })
-  const [clicked, setClicked] = useState(0)
-  const [isMenuBar, setIsMenuBar] = useState(false)
+  },
+  showBarCordinate: {
+    x: "980.503",
+    y: "128.336",
+    type: "nothing",
+    show: false,
+  },
+}
 
-  // console.log(id, folders, cards)
+export const GlobalProvider = ({ children }) => {
+  const { id } = useParams()
+  const [state, dispatch] = useReducer(reducer, defaultState)
 
-  useEffect(() => {
-    fetchData()
-  }, [id])
-
-  const menuBarOpen = () => {
-    setIsMenuBar(true)
-  }
-  const menuBarClose = () => {
-    setIsMenuBar(false)
-  }
-  const toggleMenuBar = () => {
-    setIsMenuBar(!isMenuBar)
-  }
-
-  const closeContextMenu = () => {
-    setContextMenuCordinate({ ...contextMenuCordinate, show: false })
-  }
-
-  const deleteOn = () => {
-    setIsDelete(true)
-  }
-  const deleteOff = () => {
-    setIsDelete(false)
+  const getClicked = () => {
+    let itemlist = []
+    for (let i of state.folders) {
+      if (i.clicked) itemlist.push(i._id)
+    }
+    for (let i of state.cards) {
+      if (i.clicked) itemlist.push(i._id)
+    }
+    return itemlist
   }
 
-  const handleCancel = () => {
-    closeModal()
-    setShowBarCordinate({ show: false })
-    closeContextMenu()
-    toggleSelectAll(false)
-  }
+  const menuBarOpen = () => dispatch({ type: "MENU_BAR_ON" })
+  const menuBarClose = () => dispatch({ type: "MENU_BAR_OFF" })
+  const toggleMenuBar = () => dispatch({ type: "MENU_BAR_TOGGLE" })
+
+  const closeContextMenu = () =>
+    dispatch({ type: "CLOSE_CONTEXT_MENU_CORDINATE" })
+
+  const deleteOn = () => dispatch({ type: "DELETE_ON" })
+  const deleteOff = () => dispatch({ type: "DELETE_OFF" })
 
   const toggleDeleteOnOff = () => {
-    if (folders.length + cards.length || isLoading) setIsDelete(!isDelete)
+    if (state.folders.length + state.cards.length && !state.isLoading)
+      dispatch({ type: "DELETE_TOGGLE" })
   }
 
-  const openModal = (type = null) => {
-    setIsModal(true)
-    setModalType(type)
+  const toggleRestoreOnOff = () => {
+    if (state.folders.length + state.cards.length && !state.isLoading)
+      dispatch({ type: "RESTORE_TOGGLE" })
   }
-  const closeModal = () => {
-    setModalType("card")
-    setIsModal(false)
-  }
+
+  const openModal = (type = null) =>
+    dispatch({ type: "OPEN_MODAL", payload: type })
+
+  const closeModal = () => dispatch({ type: "CLOSE_MODAL" })
 
   // API CALLS
-  const fetchData = () => getData(apiFunction)
-  const addFolder = (title) => postFolder({ ...apiFunction, title })
-  const addCard = (title, data) => postCard({ ...apiFunction, title, data })
-  const deleteOneFromServer = (idLocal) =>
-    reqDeleteOneFromServer({ ...apiFunction, idLocal })
-  const deleteFromServer = (list) =>
-    reqDeleteFromServer({ ...apiFunction, list })
-  const renameFolderFromServer = (newtitle) =>
-    reqRenameFolderFromServer({ ...apiFunction, newtitle })
-  const renameCardFromServer = (newtitle, newdata) =>
-    reqRenameCardFromServer({ ...apiFunction, newtitle, newdata })
-  const apiFunction = {
-    id,
-    dirPath,
-    setDirPath,
-    setIsLoading,
-    setIsSubmitLoading,
-    setFolders,
-    setCards,
-    folders,
-    cards,
-    fetchData,
-    contextMenuCordinate,
-    closeContextMenu,
-    deleteOff,
-    handleCancel,
-    closeModal,
-    fetchData,
+
+  const API = axios.create({ baseURL: API_URL })
+  API.interceptors.request.use((req) => {
+    const token = JSON.parse(localStorage.getItem("profile")).token
+    if (token) {
+      req.headers.Authorization = `Bearer ${token}`
+    }
+    return req
+  })
+
+  const fetchData = async () => {
+    dispatch({ type: "LOADING_ON" })
+    API.get(`/cardnote-api/${id}`)
+      .then((res) => dispatch({ type: "FETCH_DATA", payload: res.data }))
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  const folderClicked = (title, id, history) => {
-    if (isLoading) return
-    // const newPath = [...dirPath, { title, page: id }]
-    // setDirPath(newPath)
-    history.push(`/${id}`)
+  const addFolder = (title) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const data = {
+      title,
+      type: "folder",
+      parent: id,
+      directoryPath: state.dirPath,
+    }
+    API.post(`/cardnote-api/`, data)
+      .then((res) => dispatch({ type: "ADD_FOLDER", payload: res.data }))
+      .catch((err) => console.log(err.response.data))
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
-  const dirClicked = (index, page, history) => {
-    // const newDir = dirPath.slice(0, index + 1)
-    // setDirPath(newDir)
-    // fetchData()
-    history.push(`/${page}`)
+  const addCard = (title, data) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const dataToSend = {
+      title,
+      data,
+      type: "card",
+      parent: id,
+    }
+    API.post(`/cardnote-api/`, dataToSend)
+      .then((res) => dispatch({ type: "ADD_CARD", payload: res.data }))
+      .catch((err) => console.log(err))
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
-  const toggleSelectFolder = (id) => {
-    const newFolders = folders.map((item) => {
-      if (item._id === id) return { ...item, clicked: !item.clicked }
-      return item
-    })
-    setFolders(newFolders)
-  }
-  const toggleSelectCard = (id) => {
-    const newCards = cards.map((item) => {
-      if (item._id === id) return { ...item, clicked: !item.clicked }
-      return item
-    })
-    setCards(newCards)
+  const moveOneToTrash = (id) => {
+    API.put("/cardnote-api/trash", { itemlist: [id] })
+      .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  const toggleSelectAll = (type) => {
-    const newFolders = folders.map((item) => {
-      return { ...item, clicked: type }
-    })
-    const newCards = cards.map((item) => {
-      return { ...item, clicked: type }
-    })
-    setFolders(newFolders)
-    setCards(newCards)
+  const deleteOneFromServer = (id) => {
+    API.delete("/cardnote-api", { data: [id] })
+      .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
+      .catch((err) => {
+        console.log(err)
+      })
   }
+
+  const restoreOneFromTrash = (id) => {
+    API.put("/cardnote-api/restore", { itemlist: [id] })
+      .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+  const restoreFromTrash = () => {
+    const itemlist = getClicked()
+    API.put("/cardnote-api/restore", { itemlist })
+      .then(() => fetchData())
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const moveToTrash = () => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const itemlist = getClicked()
+    API.put("/cardnote-api/trash", { itemlist })
+      .then(() => fetchData())
+      .catch((err) => {
+        console.log(err)
+      })
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
+  }
+
+  const deleteFromTrash = () => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const itemlist = getClicked()
+
+    API.delete("/cardnote-api/", { data: itemlist })
+      .then(() => fetchData())
+      .catch((err) => {
+        console.log(err)
+      })
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
+  }
+
+  const renameFolderFromServer = (newtitle) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const id = state.contextMenuCordinate.id
+    const data = {
+      id,
+      newtitle,
+    }
+    API.put("/cardnote-api/folder", data)
+      .then(() => dispatch({ type: "RENAME_FOLDER", payload: data }))
+      .catch((err) => console.log(err))
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
+  }
+
+  const renameCardFromServer = (newtitle, newdata) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const id = state.contextMenuCordinate.id
+    const data = {
+      id,
+      newtitle,
+      newdata,
+    }
+    API.put("/cardnote-api/card", data)
+      .then(() => dispatch({ type: "RENAME_CARD", payload: data }))
+      .catch((err) => console.log(err))
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
+  }
+
+  const toggleSelectFolder = (id) =>
+    dispatch({ type: "TOGGLE_SELECT_FOLDER", payload: id })
+  const toggleSelectCard = (id) =>
+    dispatch({ type: "TOGGLE_SELECT_CARD", payload: id })
+
+  const toggleSelectAll = (type) =>
+    dispatch({ type: "TOGGLE_SELECT_ALL", payload: type })
 
   const handleContextMenu = (e, id, type) => {
     e.preventDefault()
-    if (isDelete) return
+    if (state.isDelete) return
     let x = e.clientX || "0"
     let y = e.clientY || "0"
     if (x + 150 > window.innerWidth) {
@@ -174,7 +225,6 @@ export const GlobalProvider = ({ children }) => {
     if (y + 80 > window.innerHeight) {
       y = y - 80
     }
-
     const data = {
       x,
       y,
@@ -182,39 +232,8 @@ export const GlobalProvider = ({ children }) => {
       show: true,
       type,
     }
-    setContextMenuCordinate(data)
-    changeOnSelection(type, id)
+    dispatch({ type: "CONTEXT_MENU_CORDINATE", payload: { data, type, id } })
   }
-  const changeOnSelection = (type, id) => {
-    if (type === "folder") {
-      const newFolders = folders.map((item) => {
-        if (item._id === id) {
-          return { ...item, clicked: true }
-        }
-        return item
-      })
-      setFolders(newFolders)
-    }
-    if (type === "card") {
-      const newCards = cards.map((item) => {
-        if (item._id === id) {
-          return { ...item, clicked: true }
-        }
-        return item
-      })
-      setCards(newCards)
-    }
-  }
-  const handleRename = (type) => {
-    openModal(`rename${type}`)
-    closeContextMenu()
-  }
-
-  useEffect(() => {
-    if (!isDelete) {
-      toggleSelectAll(false)
-    }
-  }, [isDelete])
 
   const makePdf = (name) => {
     const doc = new jsPDF()
@@ -222,60 +241,41 @@ export const GlobalProvider = ({ children }) => {
       doc.text("hello", 0, 0 + i * 5)
     }
     doc.save(`${name}.pdf`)
-    handleCancel()
   }
 
+  useEffect(() => {
+    fetchData()
+  }, [id])
+
   const value = {
-    folders,
-    cards,
-    setCards,
-    folderClicked,
-    isLoading,
-    dirPath,
-    dirClicked,
-    isModal,
+    ...state,
+    dispatch,
     openModal,
     closeModal,
-    modalType,
-    setModalType,
     addFolder,
     addCard,
-    isDelete,
     deleteOff,
     deleteOn,
     toggleSelectFolder,
+    deleteOneFromServer,
     toggleSelectCard,
     toggleSelectAll,
-    deleteFromServer,
+    deleteFromTrash,
     toggleDeleteOnOff,
-    showBarCordinate,
-    setShowBarCordinate,
-    contextMenuCordinate,
-    setContextMenuCordinate,
+    moveToTrash,
+    restoreFromTrash,
+    moveOneToTrash,
+    toggleRestoreOnOff,
     handleContextMenu,
     renameFolderFromServer,
     renameCardFromServer,
-    handleRename,
-    handleCancel,
-    deleteOneFromServer,
-    clicked,
-    setClicked,
-    setIsModal,
-    isMenuBar,
+    restoreOneFromTrash,
     menuBarOpen,
     menuBarClose,
     toggleMenuBar,
-    user,
-    setUser,
-    popType,
-    setPopType,
-    isSubmitLoading,
-    setIsSubmitLoading,
     makePdf,
   }
   return <Consumer.Provider value={value}>{children}</Consumer.Provider>
 }
 
-export const useGlobalContext = () => {
-  return useContext(Consumer)
-}
+export const useGlobalContext = () => useContext(Consumer)

@@ -21,7 +21,6 @@ const transporter = nodemailer.createTransport(
 //
 
 const signIn = async (req, res) => {
-  console.log("called sighin")
   const { email, password } = req.body
   try {
     const existingUser = await user.findOne({ email })

@@ -106,7 +106,7 @@ main.cardnote-modal {
       padding: 10px 10px;
       p {
         @include flex;
-        @include montFont;
+        @include robotoFont;
         min-height: 50px;
       }
       .align {

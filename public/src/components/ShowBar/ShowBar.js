@@ -13,7 +13,7 @@ function ShowBar() {
     if (!barCordinate) return
     barCordinate.style.right = `${x}px`
     barCordinate.style.top = `${y + 37}px`
-  }, [showBarCordinate])
+  }, [showBarCordinate, x, y])
 
   return (
     <>

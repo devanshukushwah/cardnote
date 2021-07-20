@@ -4,9 +4,14 @@ const { folders, cards } = require("../1.Modal/cardnote.js")
 const fetchAll = async (req, res) => {
   try {
     const author = req.userId
-    const newFolders = await folders(author).find()
-    const newCards = await cards(author).find()
-    res.status(200).json(newFolders.concat(newCards))
+    const fetchFolders = await folders(author).find()
+    const fetchCards = await cards(author).find()
+    const fetchData = {
+      folders: fetchFolders,
+      cards: fetchCards,
+      directoryPath: [],
+    }
+    res.status(200).json(fetchData)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -15,9 +20,14 @@ const fetchAll = async (req, res) => {
 const fetchAllTrash = async (req, res) => {
   try {
     const author = req.userId
-    const tempFolders = await folders(author).find({ trash: true })
-    const tempCards = await cards(author).find({ trash: true })
-    res.status(200).json(tempFolders.concat(tempCards))
+    const fetchFolders = await folders(author).find({ trash: true })
+    const fetchCards = await cards(author).find({ trash: true })
+    const fetchData = {
+      folders: fetchFolders,
+      cards: fetchCards,
+      directoryPath: [],
+    }
+    res.status(200).json(fetchData)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -40,7 +50,7 @@ const fetchOneDirectory = async (req, res) => {
     let fetchDirectoryPath
 
     if (parent === "homepage") {
-      fetchDirectoryPath = [{ title: "Homepage", page: "homepage" }]
+      fetchDirectoryPath = [{ title: "Home", page: "homepage" }]
     } else {
       fetchDirectoryPath = await folders(author)
         .find({ _id: parent }, { directoryPath: 1, title: 1 })
@@ -100,20 +110,22 @@ const postData = async (req, res) => {
 const deleteElements = async (req, res) => {
   try {
     const author = req.userId
-    const { deletelist } = req.body
-    if (!deletelist) res.status(400).json({ message: "id is null" })
-    await folders(author).deleteMany({
+    const itemlist = req.body
+    if (!itemlist) res.status(400).json({ message: "id is null" })
+    const tempFolders = await folders(author).deleteMany({
       _id: {
-        $in: deletelist,
+        $in: itemlist,
       },
     })
-    await cards(author).deleteMany({
+    const tempCards = await cards(author).deleteMany({
       _id: {
-        $in: deletelist,
+        $in: itemlist,
       },
     })
+    if (!tempFolders && !tempCards)
+      return res.status(422).json({ message: "error" })
 
-    res.status(200).json(tempDelete)
+    res.status(200).json({ message: "success" })
   } catch (error) {
     res.status(400).json({ message: error.message })
   }
@@ -140,7 +152,9 @@ const moveToTrash = async (req, res) => {
       },
       { alter: true }
     )
-    res.status(200).json([tempFolder, tempCard])
+    if (!tempFolder && !tempCard)
+      return res.status(422).json({ message: "error" })
+    res.status(200).json({ message: "success" })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
@@ -167,7 +181,9 @@ const restoreToTrash = async (req, res) => {
       },
       { alter: true }
     )
-    res.status(200).json([tempFolder, tempCard])
+    if (!tempFolder && !tempCard)
+      return res.status(422).json({ message: "error" })
+    res.status(200).json({ message: "success" })
   } catch (error) {
     res.status(500).json({ message: error.message })
   }

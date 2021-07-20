@@ -10,17 +10,12 @@ import { TiTick } from "react-icons/ti"
 import Empty from "../Empty/Empty"
 
 function Folders() {
-  const {
-    folders,
-    folderClicked,
-    isDelete,
-    toggleSelectFolder,
-    handleContextMenu,
-  } = useGlobalContext()
+  const { folders, isDelete, toggleSelectFolder, handleContextMenu } =
+    useGlobalContext()
   const history = useHistory()
-  const handleClick = (title, id) => {
-    isDelete ? toggleSelectFolder(id) : folderClicked(title, id, history)
-  }
+  const handleClick = (id) =>
+    isDelete ? toggleSelectFolder(id) : history.push(`/${id}`)
+
   if (!folders.length) return <></>
   return (
     <>
@@ -31,7 +26,7 @@ function Folders() {
             <article
               className={clicked ? "selected" : undefined}
               key={_id}
-              onClick={() => handleClick(title, _id)}
+              onClick={() => handleClick(_id)}
               onContextMenu={(e) => handleContextMenu(e, _id, "folder")}
             >
               <FaFolder className="icon" />
@@ -46,24 +41,18 @@ function Folders() {
 }
 
 function Cards() {
-  const { cards, setCards, isDelete, toggleSelectCard, handleContextMenu } =
-    useGlobalContext()
-  const handleClick = (id) => {
-    if (!isDelete) return swapCard(id)
-    toggleSelectCard(id)
-  }
-
-  const swapCard = (id) => {
-    const newCard = cards.map((item) => {
-      if (item._id === id) {
-        const temp = item.title
-        item.title = item.data
-        item.data = temp
-      }
-      return item
-    })
-    setCards(newCard)
-  }
+  const {
+    cards,
+    dispatch,
+    isDelete,
+    isRestore,
+    toggleSelectCard,
+    handleContextMenu,
+  } = useGlobalContext()
+  const handleClick = (id) =>
+    isDelete || isRestore
+      ? toggleSelectCard(id)
+      : dispatch({ type: "SWAP_CARD", payload: id })
 
   if (!cards.length) return <></>
   return (
@@ -89,16 +78,15 @@ function Cards() {
 function Container() {
   const { contextMenuCordinate, isLoading, showBarCordinate, folders, cards } =
     useGlobalContext()
-
   return (
     <main className="Cardnote-container">
       {isLoading ? (
         <SkeletonLoader />
       ) : (
         <>
-          {!(folders.length + cards.length) && <Empty />}
           <Folders />
           <Cards />
+          {!(folders.length + cards.length) && <Empty />}
           {contextMenuCordinate.show && <ContextMenu />}
           {showBarCordinate.show && <ShowBar />}
         </>

@@ -1,16 +1,20 @@
 import React, { useEffect } from "react"
 import styles from "./MenuBar.module.scss"
-import { useHistory, Link } from "react-router-dom"
+import { useHistory, Link, useParams } from "react-router-dom"
 import { useGlobalContext } from "../../contextAPI/useContext"
-import { RiDeleteBinLine, RiLogoutBoxLine } from "react-icons/ri"
+import { RiLogoutBoxFill } from "react-icons/ri"
+import { MdDelete } from "react-icons/md"
+import { TiHome } from "react-icons/ti"
 
 function MenuBar() {
   const history = useHistory()
-  const { setUser, isMenuBar, menuBarClose } = useGlobalContext()
+
+  const { id } = useParams()
+  const { dispatch, isMenuBar, menuBarClose } = useGlobalContext()
   const top = `${86 - window.scrollY}px`
   const handleLogout = () => {
     localStorage.clear()
-    setUser(null)
+    dispatch({ type: "SET_USER", payload: null })
     history.push("/")
   }
   useEffect(() => {
@@ -18,6 +22,10 @@ function MenuBar() {
     window.addEventListener("scroll", menuBarClose)
     return () => window.removeEventListener("scroll", menuBarClose)
   }, [isMenuBar])
+
+  useEffect(() => {
+    menuBarClose()
+  }, [id])
 
   return (
     <div
@@ -27,13 +35,24 @@ function MenuBar() {
       style={{ top }}
     >
       <button>
-        <RiDeleteBinLine />
-        <Link to="/cardnote/trash">
-          <p>Recycle bin</p>
-        </Link>
+        {id === "trash" ? (
+          <>
+            <TiHome />
+            <Link to="/homepage">
+              <p>Homepage</p>
+            </Link>
+          </>
+        ) : (
+          <>
+            <MdDelete />
+            <Link to="/trash">
+              <p>Recycle bin</p>
+            </Link>
+          </>
+        )}
       </button>
       <button onClick={handleLogout}>
-        <RiLogoutBoxLine />
+        <RiLogoutBoxFill />
         <p>Log out</p>
       </button>
     </div>

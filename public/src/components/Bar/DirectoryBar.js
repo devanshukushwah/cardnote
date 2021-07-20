@@ -7,25 +7,21 @@ import { useGlobalContext } from "../../contextAPI/useContext"
 import { BiSelection } from "react-icons/bi"
 import { IoMdDoneAll } from "react-icons/io"
 import { FaTrash } from "react-icons/fa"
-import { MdPictureAsPdf } from "react-icons/md"
+import { MdPictureAsPdf, MdRestore } from "react-icons/md"
 import Box from "./Box"
 import { useHistory } from "react-router-dom"
+import SelectedItem from "./SelectedItem"
 
 function DirectoryBar() {
   const {
     dirPath,
-    dirClicked,
     openModal,
     isDelete,
     deleteOff,
     toggleDeleteOnOff,
-    setPopType,
     toggleSelectAll,
-    setShowBarCordinate,
-    folders,
-    cards,
     clicked,
-    setClicked,
+    dispatch,
     showBarCordinate,
   } = useGlobalContext()
 
@@ -35,7 +31,7 @@ function DirectoryBar() {
 
   const handleClick = (index, page) => {
     if (index === dirPath.length - 1) return
-    dirClicked(index, page, history)
+    history.push(`/${page}`)
   }
   const handleDelete = () => {
     if (!isDelete) return openModal()
@@ -57,27 +53,17 @@ function DirectoryBar() {
       type,
       show: true,
     }
-    setShowBarCordinate(data)
+    dispatch({ type: "SET_SHOW_BAR_CORDINATE", payload: data })
   }
 
   const handleDone = () => {
-    if (!clicked) return
-    setPopType("deleteSelectAllConfirm")
-    openModal("confirmPopup")
+    if (clicked)
+      dispatch({ type: "SET_POP_TYPE", payload: "trashSelectAllConfirm" })
   }
-
-  useEffect(() => {
-    const clickedFolders = folders.filter((item) => item.clicked === true)
-    const clickedCards = cards.filter((item) => item.clicked === true)
-    setClicked(clickedFolders.length + clickedCards.length)
-  }, [folders, cards])
-
   return (
     <>
       <Box>
-        {isDelete ? (
-          <p className="clickedItem">{clicked} Item</p>
-        ) : (
+        <SelectedItem>
           <section className="address">
             {dirPath.map((item, index) => {
               const { page, title } = item
@@ -95,8 +81,7 @@ function DirectoryBar() {
               )
             })}
           </section>
-        )}
-
+        </SelectedItem>
         <section className="buttons">
           <div className="leftBtns">
             <button
