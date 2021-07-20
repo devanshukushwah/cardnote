@@ -127,6 +127,7 @@ main.cardnote-modal {
             border: none;
             color: white;
             font-weight: bold;
+            @include flex;
             height: $btnHeight;
           }
           .no {

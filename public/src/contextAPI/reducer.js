@@ -18,7 +18,7 @@ export const reducer = (state, action) => {
   }
   switch (action.type) {
     case "LOADING_ON":
-      return { ...state, isLoading: true }
+      return { ...state, isLoading: true, isModal: false }
 
     case "LOADING_OFF":
       return { ...state, isLoading: false }

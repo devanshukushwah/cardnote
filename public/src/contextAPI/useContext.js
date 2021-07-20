@@ -125,35 +125,43 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const moveOneToTrash = (id) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
     API.put("/cardnote-api/trash", { itemlist: [id] })
       .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
       .catch((err) => {
         console.log(err)
       })
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const deleteOneFromServer = (id) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
     API.delete("/cardnote-api", { data: [id] })
       .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
       .catch((err) => {
         console.log(err)
       })
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const restoreOneFromTrash = (id) => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
     API.put("/cardnote-api/restore", { itemlist: [id] })
       .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
       .catch((err) => {
         console.log(err)
       })
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
   const restoreFromTrash = () => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
     const itemlist = getClicked()
     API.put("/cardnote-api/restore", { itemlist })
       .then(() => fetchData())
       .catch((err) => {
         console.log(err)
       })
+    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const moveToTrash = () => {
@@ -170,7 +178,6 @@ export const GlobalProvider = ({ children }) => {
   const deleteFromTrash = () => {
     dispatch({ type: "SUBMIT_LOADING_ON" })
     const itemlist = getClicked()
-
     API.delete("/cardnote-api/", { data: itemlist })
       .then(() => fetchData())
       .catch((err) => {
