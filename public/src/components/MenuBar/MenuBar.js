@@ -3,7 +3,7 @@ import styles from "./MenuBar.module.scss"
 import { useHistory, Link, useParams } from "react-router-dom"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import { RiLogoutBoxFill } from "react-icons/ri"
-import { MdDelete } from "react-icons/md"
+import { FaTrash } from "react-icons/fa"
 import { TiHome } from "react-icons/ti"
 
 function MenuBar() {
@@ -44,7 +44,7 @@ function MenuBar() {
           </>
         ) : (
           <>
-            <MdDelete />
+            <FaTrash />
             <Link to="/trash">
               <p>Recycle bin</p>
             </Link>

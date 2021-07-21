@@ -22,7 +22,7 @@ function RenameCardForm() {
         <form onSubmit={(e) => handleSubmit(e)}>
           <input type="text" placeholder="New title" ref={titleRef} autoFocus />
           <input type="text" placeholder="New data" ref={dataRef} />
-          <CreateCancel />
+          <CreateCancel confirm={"Edit"} />
         </form>
       </div>
     </div>

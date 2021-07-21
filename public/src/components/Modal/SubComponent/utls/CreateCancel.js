@@ -3,7 +3,7 @@ import { useGlobalContext } from "../../../../contextAPI/useContext"
 import styles from "./CreateCancel.module.scss"
 import CirculareLoader from "../../../CirculareLoader/CirculareLoader"
 
-function CreateCancel() {
+function CreateCancel({ confirm }) {
   const { closeModal, isSubmitLoading } = useGlobalContext()
   return (
     <>
@@ -13,7 +13,7 @@ function CreateCancel() {
             Cancel
           </button>
           <button type="submit" disabled={isSubmitLoading}>
-            {isSubmitLoading ? <CirculareLoader /> : "Create"}
+            {isSubmitLoading ? <CirculareLoader /> : confirm || "Create"}
           </button>
         </div>
       </div>

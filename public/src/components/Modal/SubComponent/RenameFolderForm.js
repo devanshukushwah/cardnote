@@ -20,7 +20,7 @@ function RenameFolderForm() {
       <div className="modal-container active">
         <form onSubmit={(e) => handleSubmit(e)}>
           <input type="text" placeholder="New title" ref={titleRef} autoFocus />
-          <CreateCancel />
+          <CreateCancel confirm={"Edit"} />
         </form>
       </div>
     </div>

@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import "./ContextMenu.scss"
-import { FiEdit3 } from "react-icons/fi"
+// import { FaEdit } from "react-icons/fi"
 import { RiDeleteBin5Line } from "react-icons/ri"
 import { MdRestore } from "react-icons/md"
 import { useParams } from "react-router-dom"
+import { FaTrash, FaEdit } from "react-icons/fa"
 
 function ContextMenu() {
   const { id } = useParams()
@@ -42,10 +43,16 @@ function ContextMenu() {
                 dispatch({ type: "CONTEXT_RENAME", payload: type })
               }
             >
-              <FiEdit3 /> <p>Rename</p>
+              <div className="icon">
+                <FaEdit />
+              </div>
+              <p>Rename</p>
             </button>
             <button onClick={() => dispatch({ type: "CONTEXT_REMOVE" })}>
-              <RiDeleteBin5Line /> <p>Remove</p>
+              <div className="icon">
+                <FaTrash />
+              </div>
+              <p>Remove</p>
             </button>
           </>
         )}

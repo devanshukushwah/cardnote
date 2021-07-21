@@ -13,19 +13,25 @@
   transform-origin: top;
 
   button {
-    padding: 0 20px;
+    padding: 0 10px;
     width: 100%;
     height: 30px;
     background-color: transparent;
-    gap: 5px;
     color: #333;
     border: none;
     font-size: 18px;
-    // @include montFont;
-    font-family: "roboto";
+    font-family: "roboto", sans-serif;
     @include flex(flex-start);
     &:hover {
       background-color: #f9f6f7;
+    }
+    .icon {
+      display: inline-block;
+      width: 25px;
+      @include flex;
+      & > * {
+        fill: #333;
+      }
     }
     p {
       font-size: 15px;
