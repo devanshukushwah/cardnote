@@ -13,7 +13,7 @@ function TopHeader() {
       Type: "SET_USER",
       payload: JSON.parse(localStorage.getItem("profile")),
     })
-  }, [location])
+  }, [location, user])
 
   return (
     <>
@@ -31,7 +31,7 @@ function TopHeader() {
               />
             ) : (
               <div className="not-photo">
-                <p>{user.result.name.charAt(0)}</p>
+                <p>{user.result.name.charAt(0) || "M"}</p>
               </div>
             )}
             <div className={!isMenuBar ? "active focus" : "active"}></div>
