@@ -6,6 +6,21 @@ import { RiLogoutBoxFill } from "react-icons/ri"
 import { FaTrash } from "react-icons/fa"
 import { TiHome } from "react-icons/ti"
 
+const IconLabel = ({ icon, p, to }) => {
+  return (
+    <>
+      <div className={styles.icon}>{icon}</div>
+      {to ? (
+        <Link to={to}>
+          <p>{p}</p>
+        </Link>
+      ) : (
+        <p>{p}</p>
+      )}
+    </>
+  )
+}
+
 function MenuBar() {
   const history = useHistory()
 
@@ -36,24 +51,13 @@ function MenuBar() {
     >
       <button>
         {id === "trash" ? (
-          <>
-            <TiHome />
-            <Link to="/homepage">
-              <p>Homepage</p>
-            </Link>
-          </>
+          <IconLabel to="/homepage" p="Homepage" icon={<TiHome />} />
         ) : (
-          <>
-            <FaTrash />
-            <Link to="/trash">
-              <p>Recycle bin</p>
-            </Link>
-          </>
+          <IconLabel to="/trash" p="Recycle bin" icon={<FaTrash />} />
         )}
       </button>
       <button onClick={handleLogout}>
-        <RiLogoutBoxFill />
-        <p>Log out</p>
+        <IconLabel p="Log out" icon={<RiLogoutBoxFill />} />
       </button>
     </div>
   )

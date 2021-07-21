@@ -164,9 +164,6 @@
         cursor: pointer;
         text-transform: uppercase;
         @include flex;
-        &:focus {
-          border: 1px solid blue;
-        }
         &:disabled {
           cursor: not-allowed;
           border: 1px solid #999999;

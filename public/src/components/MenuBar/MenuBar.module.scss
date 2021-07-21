@@ -14,13 +14,14 @@
   z-index: 200;
   button {
     @include flex(flex-start);
-    padding: 0 15px;
+    padding: 0 10px;
     font-size: 20px;
-    gap: 5px;
+    gap: 2px;
     cursor: pointer;
     & > * {
       text-decoration: none;
     }
+
     p {
       color: #333;
       font-size: 14px;
@@ -39,4 +40,10 @@
 
 .active {
   transform: scaleY(1);
+}
+
+.icon {
+  @include flex;
+  align-items: center;
+  width: 25px;
 }
