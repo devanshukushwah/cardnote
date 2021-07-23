@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useGlobalContext } from "../../../contextAPI/useContext"
 import CreateCancel from "./utls/CreateCancel"
 
 function RenameCardForm() {
-  const { renameCardFromServer } = useGlobalContext()
+  const { renameCardFromServer, contextMenuCordinate, cards } =
+    useGlobalContext()
   const titleRef = React.useRef(null)
   const dataRef = React.useRef(null)
 
@@ -11,6 +12,13 @@ function RenameCardForm() {
     e.preventDefault()
     renameCardFromServer(titleRef.current.value, dataRef.current.value)
   }
+  useEffect(() => {
+    const { id } = contextMenuCordinate
+    const { title, data } = cards.find((item) => item._id === id)
+    titleRef.current.value = title
+    dataRef.current.value = data
+    titleRef.current.select()
+  }, [])
 
   return (
     <div className="modal">
@@ -20,8 +28,19 @@ function RenameCardForm() {
       <div className="underline" />
       <div className="modal-container active">
         <form onSubmit={(e) => handleSubmit(e)}>
-          <input type="text" placeholder="New title" ref={titleRef} autoFocus />
-          <input type="text" placeholder="New data" ref={dataRef} />
+          <input
+            type="text"
+            placeholder="New title"
+            ref={titleRef}
+            onFocus={(e) => e.target.select()}
+            autoFocus
+          />
+          <input
+            type="text"
+            placeholder="New data"
+            ref={dataRef}
+            onFocus={(e) => e.target.select()}
+          />
           <CreateCancel confirm={"Edit"} />
         </form>
       </div>
