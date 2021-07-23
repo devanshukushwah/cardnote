@@ -15,7 +15,7 @@ function Message() {
       }
     >
       <SiGooglemessages size={22} fill="#8cc63f" />
-      <p>{messageType || "No message open by mistake"}</p>
+      <p>{messageType || "Please Check Your Internet Connection"}</p>
     </main>
   )
 }

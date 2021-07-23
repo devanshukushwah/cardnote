@@ -34,6 +34,9 @@
     color: #333;
     &:hover {
       background-color: #efefef;
+      .icon {
+        color: #333;
+      }
     }
   }
 }
@@ -45,5 +48,6 @@
 .icon {
   @include flex;
   align-items: center;
+  color: #5f6368;
   width: 25px;
 }

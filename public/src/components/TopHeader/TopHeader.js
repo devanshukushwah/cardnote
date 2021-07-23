@@ -1,19 +1,21 @@
 import React, { useEffect } from "react"
-import { useLocation } from "react-router-dom"
+// import { useLocation } from "react-router-dom"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import { ReactComponent as Logo } from "../../images/logo.svg"
 import "./TopHeader.scss"
 
 function TopHeader() {
-  const { isMenuBar, toggleMenuBar, user, dispatch } = useGlobalContext()
-  const location = useLocation()
-  useEffect(() => {
-    // const token = user?.token
-    dispatch({
-      Type: "SET_USER",
-      payload: JSON.parse(localStorage.getItem("profile")),
-    })
-  }, [location, user])
+  const { isMenuBar, toggleMenuBar } = useGlobalContext()
+  // const location = useLocation()
+  // useEffect(() => {
+  //   // const token = user?.token
+  //   dispatch({
+  //     Type: "SET_USER",
+  //     payload: JSON.parse(localStorage.getItem("profile")),
+  //   })
+  // }, [location, user])
+
+  const user = JSON.parse(localStorage.profile)
 
   return (
     <>

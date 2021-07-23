@@ -113,7 +113,7 @@ function DirectoryBar() {
                 className={isDelete ? "icon-active" : "icon"}
                 size={16}
               />
-              <p>Delete</p>
+              <p>Remove</p>
             </button>
           </div>
           <div className="fullBtns">

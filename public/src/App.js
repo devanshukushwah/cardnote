@@ -5,10 +5,11 @@ import CardNote from "./CardNote"
 import HomePage from "./HomePage"
 import PrivateRoute from "./utils/PrivateRoute"
 import { Sign, ForgetPassword, NewPassword } from "./components/SignForms/Sign"
+import { AuthProvider } from "./contextAPI/useAuth"
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Router>
         <Switch>
           <Route exact path="/">
@@ -32,7 +33,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </>
+    </AuthProvider>
   )
 }
 

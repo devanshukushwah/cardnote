@@ -11,7 +11,7 @@ const defaultState = {
   folders: [],
   cards: [],
   dirPath: [{ title: "Home", page: "homepage" }],
-  user: JSON.parse(localStorage.getItem("profile")) || null,
+  user: null,
   isLoading: true,
   isSubmitLoading: false,
   isModal: false,

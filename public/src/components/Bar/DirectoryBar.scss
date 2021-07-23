@@ -70,13 +70,18 @@ main.DirectoryBar {
     gap: 2px;
 
     .icon {
-      fill: #333;
+      fill: #5f6368;
     }
     .icon-active {
       fill: #8cc63f;
     }
     button {
       cursor: pointer;
+      &:hover {
+        .icon {
+          fill: #333;
+        }
+      }
     }
 
     .leftBtns {
@@ -119,10 +124,15 @@ main.DirectoryBar {
         width: 30px;
         margin-right: 12px;
         border-radius: 4px;
+        &:hover {
+          p {
+            color: #333;
+          }
+        }
         p {
           transition: 0.2s;
           font-size: 30px;
-          color: #333;
+          color: #5f6368;
           transform: rotate(45deg);
         }
         .active {
@@ -189,7 +199,9 @@ main.scrollOn {
   transition: 0.2s;
   border-radius: 4px;
   cursor: pointer;
+  fill: #5f6368;
   &:hover {
+    fill: #333;
     background-color: #eeeeee;
   }
 }
