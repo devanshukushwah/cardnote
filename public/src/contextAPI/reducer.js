@@ -7,6 +7,10 @@ export const reducer = (state, action) => {
       ...state.contextMenuCordinate,
       show: false,
     },
+    closeShowBarCordinate = {
+      ...state.showBarCordinate,
+      show: false,
+    },
     newClicked
 
   const checkClicked = (folders, cards) => {
@@ -16,6 +20,7 @@ export const reducer = (state, action) => {
     const clickedCards = cards.filter((item) => item.clicked === true).length
     return clickedFolders + clickedCards
   }
+
   switch (action.type) {
     case "LOADING_ON":
       return { ...state, isLoading: true, isModal: false }
@@ -156,6 +161,8 @@ export const reducer = (state, action) => {
         ...state,
         folders: newFolders,
         cards: newCards,
+        isMenuBar: false,
+        showBarCordinate: closeShowBarCordinate,
         contextMenuCordinate: action.payload.data,
       }
 
@@ -178,10 +185,16 @@ export const reducer = (state, action) => {
         modalType: "card",
         folders: newFolders,
         cards: newCards,
+        showBarCordinate: closeShowBarCordinate,
       }
 
     case "DELETE_ON":
-      return { ...state, isDelete: true }
+      console.log(closeShowBarCordinate)
+      return {
+        ...state,
+        isDelete: true,
+        showBarCordinate: closeShowBarCordinate,
+      }
 
     case "DELETE_OFF":
       newFolders = state.folders.map((item) => {
@@ -204,11 +217,18 @@ export const reducer = (state, action) => {
           ...state,
           clicked: 0,
           folders: newFolders,
+          showBarCordinate: closeShowBarCordinate,
           cards: newCards,
           isDelete: false,
         }
       }
-      return { ...state, isDelete: !state.isDelete, isRestore: false }
+
+      return {
+        ...state,
+        showBarCordinate: closeShowBarCordinate,
+        isDelete: !state.isDelete,
+        isRestore: false,
+      }
 
     case "RESTORE_TOGGLE":
       if (state.isRestore) {
@@ -254,7 +274,11 @@ export const reducer = (state, action) => {
       }
 
     case "SET_SHOW_BAR_CORDINATE":
-      return { ...state, showBarCordinate: action.payload }
+      return {
+        ...state,
+        showBarCordinate: action.payload,
+        isDelete: false,
+      }
 
     case "CONTEXT_RENAME":
       return {

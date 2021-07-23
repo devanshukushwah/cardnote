@@ -77,9 +77,15 @@ main.DirectoryBar {
     }
     button {
       cursor: pointer;
+      p {
+        color: #5f6368;
+      }
       &:hover {
         .icon {
           fill: #333;
+        }
+        p {
+          color: #333;
         }
       }
     }
@@ -115,6 +121,9 @@ main.DirectoryBar {
       }
       .btn-active {
         background-color: #eeeeee;
+        p {
+          color: #333;
+        }
       }
     }
     .halfBtns {

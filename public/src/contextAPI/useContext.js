@@ -223,7 +223,7 @@ export const GlobalProvider = ({ children }) => {
 
   const handleContextMenu = (e, id, type) => {
     e.preventDefault()
-    if (state.isDelete) return
+    if (state.isDelete) return false
     let x = e.clientX || "0"
     let y = e.clientY || "0"
     if (x + 150 > window.innerWidth) {

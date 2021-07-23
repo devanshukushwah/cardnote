@@ -121,12 +121,16 @@ function DirectoryBar() {
               onClick={() => handleFullClick("card")}
               ref={cardRef}
               className={
-                showBarCordinate.type === "card" ? "btn-active" : undefined
+                showBarCordinate.show && showBarCordinate.type === "card"
+                  ? "btn-active"
+                  : undefined
               }
             >
               <AddCard
                 className={
-                  showBarCordinate.type === "card" ? "icon-active" : "icon"
+                  showBarCordinate.show && showBarCordinate.type === "card"
+                    ? "icon-active"
+                    : "icon"
                 }
               />
               <p>Card</p>
@@ -135,12 +139,16 @@ function DirectoryBar() {
               onClick={() => handleFullClick("folder")}
               ref={folderRef}
               className={
-                showBarCordinate.type === "folder" ? "btn-active" : undefined
+                showBarCordinate.show && showBarCordinate.type === "folder"
+                  ? "btn-active"
+                  : undefined
               }
             >
               <AddFolder
                 className={
-                  showBarCordinate.type === "folder" ? "icon-active" : "icon"
+                  showBarCordinate.show && showBarCordinate.type === "folder"
+                    ? "icon-active"
+                    : "icon"
                 }
               />
               <p>Folder</p>
