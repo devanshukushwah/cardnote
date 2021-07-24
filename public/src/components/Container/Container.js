@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import ContextMenu from "../ContextMenu/ContextMenu"
 import { useHistory } from "react-router-dom"
@@ -40,36 +40,34 @@ function Folders() {
   )
 }
 
-function Cards() {
-  const {
-    cards,
-    dispatch,
-    isDelete,
-    isRestore,
-    toggleSelectCard,
-    handleContextMenu,
-  } = useGlobalContext()
+const SingleCard = ({ _id, title, data, clicked }) => {
+  const { isDelete, isRestore, toggleSelectCard, handleContextMenu } =
+    useGlobalContext()
+  const [face, setFace] = useState(true)
+
   const handleClick = (id) =>
-    isDelete || isRestore
-      ? toggleSelectCard(id)
-      : dispatch({ type: "SWAP_CARD", payload: id })
+    isDelete || isRestore ? toggleSelectCard(id) : setFace(!face)
+  return (
+    <article
+      key={_id}
+      onClick={() => handleClick(_id)}
+      onContextMenu={(e) => handleContextMenu(e, _id, "card")}
+      className={clicked ? "selected" : undefined}
+    >
+      <p>{face ? title : data}</p>
+      <TiTick className={clicked ? "tick-on" : "tick-off"} />
+    </article>
+  )
+}
+
+function Cards() {
+  const { cards } = useGlobalContext()
 
   if (!cards.length) return <></>
   return (
     <section className="Cardnote-Cards col-card">
       {cards.map((item) => {
-        const { _id, title, clicked } = item
-        return (
-          <article
-            key={_id}
-            onClick={() => handleClick(_id)}
-            className={clicked ? "selected" : undefined}
-            onContextMenu={(e) => handleContextMenu(e, _id, "card")}
-          >
-            <p>{title}</p>
-            <TiTick className={clicked ? "tick-on" : "tick-off"} />
-          </article>
-        )
+        return <SingleCard {...item} />
       })}
     </section>
   )

@@ -52,6 +52,7 @@ export const reducer = (state, action) => {
         isModal: false,
         isSubmitLoading: false,
         isLoading: false,
+        showBarCordinate: closeShowBarCordinate,
       }
 
     case "ADD_CARD":
@@ -62,6 +63,7 @@ export const reducer = (state, action) => {
         isModal: false,
         isSubmitLoading: false,
         isLoading: false,
+        showBarCordinate: closeShowBarCordinate,
       }
 
     case "SWAP_CARD":

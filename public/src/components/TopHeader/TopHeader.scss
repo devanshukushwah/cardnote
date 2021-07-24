@@ -35,7 +35,7 @@ header.cardNote {
     .not-photo {
       position: relative;
       z-index: 1;
-      @include hw(50px, 50px);
+      @include hw($avtarSize, $avtarSize);
       @include flex;
       border-radius: 50%;
       background-color: #333;

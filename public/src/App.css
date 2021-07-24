@@ -6,3 +6,8 @@
 button {
   user-select: none;
 }
+@font-face {
+  font-family: "Roboto";
+  src: url("./fonts/Roboto-Regular.ttf") format("woff2");
+  font-weight: 400;
+}
