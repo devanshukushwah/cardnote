@@ -108,6 +108,7 @@ main.Cardnote-container {
         // @include montFont;
         font-family: "Roboto", "san-serif";
         font-size: 1rem;
+        text-align: center;
       }
       @include tick;
       .tick-on {
