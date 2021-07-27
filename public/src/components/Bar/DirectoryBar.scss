@@ -206,11 +206,12 @@ main.scrollOn {
 
 .homebutton {
   @include flex;
+  height: 100%;
   padding: 2px 5px;
   transition: 0.2s;
   border-radius: 4px;
   cursor: pointer;
-  & > * {
+  .icon {
     fill: #5f6368;
     color: #5f6368;
   }

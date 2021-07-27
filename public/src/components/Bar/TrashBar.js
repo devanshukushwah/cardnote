@@ -13,7 +13,9 @@ const HomeButton = () => {
   const history = useHistory()
   return (
     <button className="homebutton" onClick={() => history.push("/homepage")}>
-      <TiHome size={22} />
+      <div class="icon">
+        <TiHome size={21} />
+      </div>
       <p>Home</p>
     </button>
   )
