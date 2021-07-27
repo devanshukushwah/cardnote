@@ -20,6 +20,7 @@ main.DirectoryBar {
   .address {
     @include flex;
     height: 100%;
+    margin-left: 5px;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       width: 0 !important;
