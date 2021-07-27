@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
-import CreateCancel from "./SubComponent/utls/CreateCancel"
+import CreateCancel from "../CreateCancel/CreateCancel"
 
 function PdfPopup() {
   const { makePdf, dirPath } = useGlobalContext()

@@ -53,7 +53,7 @@ function MenuBar() {
         {id === "trash" ? (
           <IconLabel to="/homepage" p="Homepage" icon={<TiHome />} />
         ) : (
-          <IconLabel to="/trash" p="Recycle bin" icon={<FaTrash />} />
+          <IconLabel to="/trash" p="Recycle bin" icon={<FaTrash size={16} />} />
         )}
       </button>
       <button onClick={handleLogout}>

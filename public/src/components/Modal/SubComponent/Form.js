@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { useGlobalContext } from "../../../contextAPI/useContext"
 import "./Form.scss"
-import CreateCancel from "./utls/CreateCancel"
+import CreateCancel from "../../CreateCancel/CreateCancel"
 
 export const FolderForm = () => {
   const { addFolder } = useGlobalContext()
@@ -23,7 +23,7 @@ export const FolderForm = () => {
           ref={titleRef}
           autoFocus
         />
-        <CreateCancel />
+        <CreateCancel confirm="Add" />
       </form>
     </div>
   )
@@ -44,9 +44,9 @@ export const CardForm = () => {
   return (
     <div className="modal-container">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" placeholder="Front" ref={titleRef} autoFocus />
+        <input type="text" placeholder="Face" ref={titleRef} autoFocus />
         <input type="text" placeholder="Back" ref={dataRef} />
-        <CreateCancel />
+        <CreateCancel confirm="Add" />
       </form>
     </div>
   )

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useGlobalContext } from "../../../contextAPI/useContext"
-import CreateCancel from "./utls/CreateCancel"
+import CreateCancel from "../../CreateCancel/CreateCancel"
 
 function RenameCardForm() {
   const { renameCardFromServer, contextMenuCordinate, cards } =

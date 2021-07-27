@@ -12,11 +12,10 @@ import { useHistory } from "react-router-dom"
 const HomeButton = () => {
   const history = useHistory()
   return (
-    <TiHome
-      className="homebutton"
-      size={22}
-      onClick={() => history.push("/homepage")}
-    />
+    <button className="homebutton" onClick={() => history.push("/homepage")}>
+      <TiHome size={22} />
+      <p>Home</p>
+    </button>
   )
 }
 
@@ -50,21 +49,21 @@ function TrashBar() {
         <div className="leftBtns">
           <button
             onClick={() => toggleSelectAll(true)}
-            className={isDelete || isRestore ? "active" : "not-active"}
+            className={isDelete || isRestore ? "show" : "hide"}
           >
             <BiSelection className="icon" size={22} />
             <p>Select All</p>
           </button>
           <button
             onClick={handleDone}
-            className={isDelete || isRestore ? "active" : "not-active"}
+            className={isDelete || isRestore ? "show" : "hide"}
           >
             <IoMdDoneAll className="icon" size={22} />
             <p>Done</p>
           </button>
           <button
             onClick={toggleRestoreOnOff}
-            className={isRestore && !isDelete ? "btn-active" : undefined}
+            className={isRestore && !isDelete && "active"}
           >
             <MdRestore
               className={isRestore ? "icon-active" : "icon"}
@@ -74,7 +73,7 @@ function TrashBar() {
           </button>
           <button
             onClick={toggleDeleteOnOff}
-            className={isDelete && !isRestore ? "btn-active" : undefined}
+            className={isDelete && !isRestore && "active"}
           >
             <FaTrash className={isDelete ? "icon-active" : "icon"} size={16} />
             <p>Delete</p>

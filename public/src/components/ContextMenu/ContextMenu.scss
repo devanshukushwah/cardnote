@@ -29,9 +29,9 @@
       }
     }
     .icon {
-      display: inline-block;
-      width: 25px;
       @include flex;
+      width: 25px;
+      height: 100%;
       & > * {
         fill: #5f6368;
       }

@@ -2,10 +2,19 @@ import React, { useEffect, useRef } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import "./ContextMenu.scss"
 // import { FaEdit } from "react-icons/fi"
-import { RiDeleteBin5Line } from "react-icons/ri"
+import { RiDeleteBin5Fill, RiDeleteBin5Line } from "react-icons/ri"
 import { MdRestore } from "react-icons/md"
 import { useParams } from "react-router-dom"
 import { FaTrash, FaEdit } from "react-icons/fa"
+
+const Button = ({ icon, p, onClick }) => {
+  return (
+    <button onClick={onClick}>
+      <div className="icon">{icon}</div>
+      <p>{p}</p>
+    </button>
+  )
+}
 
 function ContextMenu() {
   const { id } = useParams()
@@ -29,31 +38,31 @@ function ContextMenu() {
       >
         {id === "trash" ? (
           <>
-            <button onClick={() => dispatch({ type: "CONTEXT_RESTORE" })}>
-              <MdRestore /> <p>Restore</p>
-            </button>
-            <button onClick={() => dispatch({ type: "CONTEXT_DELETE" })}>
-              <RiDeleteBin5Line /> <p>Delete</p>
-            </button>
+            <Button
+              icon={<MdRestore />}
+              p="Restore"
+              onClick={() => dispatch({ type: "CONTEXT_RESTORE" })}
+            />
+            <Button
+              icon={<FaTrash size={16} />}
+              p="Delete"
+              onClick={() => dispatch({ type: "CONTEXT_DELETE" })}
+            />
           </>
         ) : (
           <>
-            <button
+            <Button
+              icon={<FaEdit />}
+              p="Rename"
               onClick={() =>
                 dispatch({ type: "CONTEXT_RENAME", payload: type })
               }
-            >
-              <div className="icon">
-                <FaEdit />
-              </div>
-              <p>Rename</p>
-            </button>
-            <button onClick={() => dispatch({ type: "CONTEXT_REMOVE" })}>
-              <div className="icon">
-                <FaTrash />
-              </div>
-              <p>Remove</p>
-            </button>
+            />
+            <Button
+              icon={<FaTrash size={16} />}
+              p="Remove"
+              onClick={() => dispatch({ type: "CONTEXT_REMOVE" })}
+            />
           </>
         )}
       </main>

@@ -1,4 +1,4 @@
-@import "../../../../scssVariblesFunction.scss";
+@import "../../scssVariblesFunction.scss";
 $btnWidth: 75px;
 $btnHeight: 27px;
 .align {
@@ -25,8 +25,8 @@ $btnHeight: 27px;
       border: 1px solid #858585;
       background-color: white;
       &:hover {
-        color: black;
-        border: 1px solid black;
+        color: #333;
+        border: 1px solid #333;
       }
       &:active {
         transform: scale(0.95);

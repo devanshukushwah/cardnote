@@ -86,28 +86,25 @@ function DirectoryBar() {
           <div className="leftBtns">
             <button
               onClick={() => toggleSelectAll(true)}
-              className={isDelete ? "active" : "not-active"}
+              className={isDelete ? "show" : "hide"}
             >
-              <BiSelection className="icon" size={22} />
+              <BiSelection className="icon" />
               <p>Select All</p>
             </button>
-            <button
-              onClick={handleDone}
-              className={isDelete ? "active" : "not-active"}
-            >
-              <IoMdDoneAll className="icon" size={22} />
+            <button onClick={handleDone} className={isDelete ? "show" : "hide"}>
+              <IoMdDoneAll className="icon" />
               <p>Done</p>
             </button>
             <button
               onClick={() => openModal("pdfPopup")}
-              className={!isDelete ? "active" : "not-active"}
+              className={!isDelete ? "show" : "hide"}
             >
-              <MdPictureAsPdf className="icon" size={22} />
+              <MdPictureAsPdf className="icon" />
               <p>Pdf</p>
             </button>
             <button
               onClick={toggleDeleteOnOff}
-              className={isDelete ? "btn-active" : undefined}
+              className={isDelete && "active"}
             >
               <FaTrash
                 className={isDelete ? "icon-active" : "icon"}
@@ -121,9 +118,9 @@ function DirectoryBar() {
               onClick={() => handleFullClick("card")}
               ref={cardRef}
               className={
-                showBarCordinate.show && showBarCordinate.type === "card"
-                  ? "btn-active"
-                  : undefined
+                showBarCordinate.show &&
+                showBarCordinate.type === "card" &&
+                "active"
               }
             >
               <AddCard
@@ -139,9 +136,9 @@ function DirectoryBar() {
               onClick={() => handleFullClick("folder")}
               ref={folderRef}
               className={
-                showBarCordinate.show && showBarCordinate.type === "folder"
-                  ? "btn-active"
-                  : undefined
+                showBarCordinate.show &&
+                showBarCordinate.type === "folder" &&
+                "active"
               }
             >
               <AddFolder
@@ -156,7 +153,7 @@ function DirectoryBar() {
           </div>
           <div className="halfBtns">
             <button className="xross" onClick={handleDelete}>
-              <p className={isDelete ? "active" : undefined}>&times;</p>
+              <p className={isDelete && "active"}>&times;</p>
             </button>
           </div>
         </section>

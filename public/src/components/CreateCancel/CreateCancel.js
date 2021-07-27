@@ -1,7 +1,7 @@
 import React from "react"
-import { useGlobalContext } from "../../../../contextAPI/useContext"
+import { useGlobalContext } from "../../contextAPI/useContext"
 import styles from "./CreateCancel.module.scss"
-import CirculareLoader from "../../../CirculareLoader/CirculareLoader"
+import CirculareLoader from "../CirculareLoader/CirculareLoader"
 
 function CreateCancel({ confirm }) {
   const { closeModal, isSubmitLoading } = useGlobalContext()
