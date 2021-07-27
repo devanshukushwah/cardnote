@@ -14,9 +14,7 @@ export const reducer = (state, action) => {
     newClicked
 
   const checkClicked = (folders, cards) => {
-    const clickedFolders = folders.filter(
-      (item) => item.clicked === true
-    ).length
+    const clickedFolders = folders.filter((item) => item.clicked === true).length
     const clickedCards = cards.filter((item) => item.clicked === true).length
     return clickedFolders + clickedCards
   }
@@ -30,6 +28,9 @@ export const reducer = (state, action) => {
 
     case "SUBMIT_LOADING_ON":
       return { ...state, isSubmitLoading: true }
+
+    case "PDF_CREATED":
+      return { ...state, isSubmitLoading: false, isModal: false }
 
     case "FETCH_DATA":
       return {
@@ -68,8 +69,7 @@ export const reducer = (state, action) => {
 
     case "SWAP_CARD":
       newCards = state.cards.map((item) => {
-        if (item._id === action.payload)
-          return { ...item, title: item.data, data: item.title }
+        if (item._id === action.payload) return { ...item, title: item.data, data: item.title }
         return item
       })
 
@@ -82,8 +82,7 @@ export const reducer = (state, action) => {
 
     case "RENAME_FOLDER":
       newFolders = state.folders.map((item) => {
-        if (item._id === action.payload.id)
-          return { ...item, title: action.payload.newtitle, clicked: false }
+        if (item._id === action.payload.id) return { ...item, title: action.payload.newtitle, clicked: false }
         return item
       })
 
@@ -114,8 +113,7 @@ export const reducer = (state, action) => {
 
     case "TOGGLE_SELECT_FOLDER":
       newFolders = state.folders.map((item) => {
-        if (item._id === action.payload)
-          return { ...item, clicked: !item.clicked }
+        if (item._id === action.payload) return { ...item, clicked: !item.clicked }
         return item
       })
       newClicked = checkClicked(newFolders, state.cards)
@@ -123,8 +121,7 @@ export const reducer = (state, action) => {
 
     case "TOGGLE_SELECT_CARD":
       newCards = state.cards.map((item) => {
-        if (item._id === action.payload)
-          return { ...item, clicked: !item.clicked }
+        if (item._id === action.payload) return { ...item, clicked: !item.clicked }
         return item
       })
       newClicked = checkClicked(state.folders, newCards)

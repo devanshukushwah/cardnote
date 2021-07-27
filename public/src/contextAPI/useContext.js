@@ -40,6 +40,10 @@ export const GlobalProvider = ({ children }) => {
   const { id } = useParams()
   const [state, dispatch] = useReducer(reducer, defaultState)
 
+  useEffect(() => {
+    fetchData()
+  }, [id])
+
   const getClicked = () => {
     let itemlist = []
     for (let i of state.folders) {
@@ -55,24 +59,21 @@ export const GlobalProvider = ({ children }) => {
   const menuBarClose = () => dispatch({ type: "MENU_BAR_OFF" })
   const toggleMenuBar = () => dispatch({ type: "MENU_BAR_TOGGLE" })
 
-  const closeContextMenu = () =>
-    dispatch({ type: "CLOSE_CONTEXT_MENU_CORDINATE" })
+  // const closeContextMenu = () =>
+  //   dispatch({ type: "CLOSE_CONTEXT_MENU_CORDINATE" })
 
   const deleteOn = () => dispatch({ type: "DELETE_ON" })
   const deleteOff = () => dispatch({ type: "DELETE_OFF" })
 
   const toggleDeleteOnOff = () => {
-    if (state.folders.length + state.cards.length && !state.isLoading)
-      dispatch({ type: "DELETE_TOGGLE" })
+    if (state.folders.length + state.cards.length && !state.isLoading) dispatch({ type: "DELETE_TOGGLE" })
   }
 
   const toggleRestoreOnOff = () => {
-    if (state.folders.length + state.cards.length && !state.isLoading)
-      dispatch({ type: "RESTORE_TOGGLE" })
+    if (state.folders.length + state.cards.length && !state.isLoading) dispatch({ type: "RESTORE_TOGGLE" })
   }
 
-  const openModal = (type = null) =>
-    dispatch({ type: "OPEN_MODAL", payload: type })
+  const openModal = (type = null) => dispatch({ type: "OPEN_MODAL", payload: type })
 
   const closeModal = () => dispatch({ type: "CLOSE_MODAL" })
 
@@ -107,7 +108,6 @@ export const GlobalProvider = ({ children }) => {
     API.post(`/cardnote-api/`, data)
       .then((res) => dispatch({ type: "ADD_FOLDER", payload: res.data }))
       .catch((err) => console.log(err.response.data))
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const addCard = (title, data) => {
@@ -121,7 +121,6 @@ export const GlobalProvider = ({ children }) => {
     API.post(`/cardnote-api/`, dataToSend)
       .then((res) => dispatch({ type: "ADD_CARD", payload: res.data }))
       .catch((err) => console.log(err))
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const moveOneToTrash = (id) => {
@@ -131,7 +130,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((err) => {
         console.log(err)
       })
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const deleteOneFromServer = (id) => {
@@ -141,7 +139,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((err) => {
         console.log(err)
       })
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const restoreOneFromTrash = (id) => {
@@ -151,7 +148,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((err) => {
         console.log(err)
       })
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
   const restoreFromTrash = () => {
     dispatch({ type: "SUBMIT_LOADING_ON" })
@@ -161,7 +157,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((err) => {
         console.log(err)
       })
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const moveToTrash = () => {
@@ -172,7 +167,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((err) => {
         console.log(err)
       })
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const deleteFromTrash = () => {
@@ -183,7 +177,6 @@ export const GlobalProvider = ({ children }) => {
       .catch((err) => {
         console.log(err)
       })
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const renameFolderFromServer = (newtitle) => {
@@ -196,7 +189,6 @@ export const GlobalProvider = ({ children }) => {
     API.put("/cardnote-api/folder", data)
       .then(() => dispatch({ type: "RENAME_FOLDER", payload: data }))
       .catch((err) => console.log(err))
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
   const renameCardFromServer = (newtitle, newdata) => {
@@ -210,16 +202,12 @@ export const GlobalProvider = ({ children }) => {
     API.put("/cardnote-api/card", data)
       .then(() => dispatch({ type: "RENAME_CARD", payload: data }))
       .catch((err) => console.log(err))
-    dispatch({ type: "SUBMIT_LOADING_OFF" })
   }
 
-  const toggleSelectFolder = (id) =>
-    dispatch({ type: "TOGGLE_SELECT_FOLDER", payload: id })
-  const toggleSelectCard = (id) =>
-    dispatch({ type: "TOGGLE_SELECT_CARD", payload: id })
+  const toggleSelectFolder = (id) => dispatch({ type: "TOGGLE_SELECT_FOLDER", payload: id })
+  const toggleSelectCard = (id) => dispatch({ type: "TOGGLE_SELECT_CARD", payload: id })
 
-  const toggleSelectAll = (type) =>
-    dispatch({ type: "TOGGLE_SELECT_ALL", payload: type })
+  const toggleSelectAll = (type) => dispatch({ type: "TOGGLE_SELECT_ALL", payload: type })
 
   const handleContextMenu = (e, id, type) => {
     e.preventDefault()
@@ -227,10 +215,10 @@ export const GlobalProvider = ({ children }) => {
     let x = e.clientX || "0"
     let y = e.clientY || "0"
     if (x + 150 > window.innerWidth) {
-      x = x - 155
+      x -= 155
     }
     if (y + 80 > window.innerHeight) {
-      y = y - 80
+      y -= 80
     }
     const data = {
       x,
@@ -243,16 +231,44 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const makePdf = (name) => {
-    const doc = new jsPDF()
-    for (let i = 0; i < 10; i++) {
-      doc.text("hello", 0, 0 + i * 5)
-    }
-    doc.save(`${name}.pdf`)
-  }
+    dispatch({ type: "SUBMIT_LOADING_ON" })
 
-  useEffect(() => {
-    fetchData()
-  }, [id])
+    const doc = new jsPDF()
+    const topBottomGap = 5
+    const leftRightGap = 5
+    const width = doc.internal.pageSize.getWidth() - 2 * leftRightGap
+    const height = doc.internal.pageSize.getHeight() - 2 * topBottomGap
+    let lineNo = 10
+
+    const printParagraph = (pos, arr) => {
+      const splitText = doc.splitTextToSize(arr, width)
+
+      for (let j = 0; j < splitText.length; j++) {
+        const align = pos === "center" ? width / 2 - splitText[j].length : leftRightGap
+        if (lineNo >= height) {
+          doc.addPage()
+          lineNo = 10
+        }
+        doc.text(align, lineNo, splitText[j])
+        lineNo += 5
+      }
+    }
+
+    doc.setFontSize(16)
+    printParagraph("center", name)
+    lineNo += 5
+    doc.setFontSize(14)
+    for (let i = 0; i < state.cards.length; i++) {
+      printParagraph("normal", state.cards[i].title)
+      lineNo += 1
+      printParagraph("normal", state.cards[i].data)
+      lineNo += 5
+    }
+    setTimeout(() => {
+      doc.save(`${name}.pdf`)
+      dispatch({ type: "PDF_CREATED" })
+    }, 1000)
+  }
 
   const value = {
     ...state,
