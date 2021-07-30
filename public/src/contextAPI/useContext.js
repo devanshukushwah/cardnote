@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useReducer } from "react"
 import axios from "axios"
 import { useParams } from "react-router-dom"
 import { API_URL } from "../config/apiConfig"
-import { jsPDF } from "jspdf"
 import { reducer } from "./reducer"
+import makePdfFunction from "./functions/makepdf"
 
 const Consumer = React.createContext()
 
@@ -214,12 +214,8 @@ export const GlobalProvider = ({ children }) => {
     if (state.isDelete) return false
     let x = e.clientX || "0"
     let y = e.clientY || "0"
-    if (x + 150 > window.innerWidth) {
-      x -= 155
-    }
-    if (y + 80 > window.innerHeight) {
-      y -= 80
-    }
+    if (x + 150 > window.innerWidth) x -= 155
+    if (y + 80 > window.innerHeight) y -= 80
     const data = {
       x,
       y,
@@ -227,48 +223,10 @@ export const GlobalProvider = ({ children }) => {
       show: true,
       type,
     }
-    dispatch({ type: "CONTEXT_MENU_CORDINATE", payload: { data, type, id } })
+    dispatch({ type: "CONTEXT_MENU_CORDINATE", payload: data })
   }
 
-  const makePdf = (name) => {
-    dispatch({ type: "SUBMIT_LOADING_ON" })
-
-    const doc = new jsPDF()
-    const topBottomGap = 5
-    const leftRightGap = 5
-    const width = doc.internal.pageSize.getWidth() - 2 * leftRightGap
-    const height = doc.internal.pageSize.getHeight() - 2 * topBottomGap
-    let lineNo = 10
-
-    const printParagraph = (pos, arr) => {
-      const splitText = doc.splitTextToSize(arr, width)
-
-      for (let j = 0; j < splitText.length; j++) {
-        const align = pos === "center" ? width / 2 - splitText[j].length : leftRightGap
-        if (lineNo >= height) {
-          doc.addPage()
-          lineNo = 10
-        }
-        doc.text(align, lineNo, splitText[j])
-        lineNo += 5
-      }
-    }
-
-    doc.setFontSize(16)
-    printParagraph("center", name)
-    lineNo += 5
-    doc.setFontSize(14)
-    for (let i = 0; i < state.cards.length; i++) {
-      printParagraph("normal", state.cards[i].title)
-      lineNo += 1
-      printParagraph("normal", state.cards[i].data)
-      lineNo += 5
-    }
-    setTimeout(() => {
-      doc.save(`${name}.pdf`)
-      dispatch({ type: "PDF_CREATED" })
-    }, 1000)
-  }
+  const makePdf = (name) => makePdfFunction({ name, cards: state.cards, dispatch })
 
   const value = {
     ...state,

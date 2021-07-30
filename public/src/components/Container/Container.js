@@ -10,11 +10,9 @@ import { TiTick } from "react-icons/ti"
 import Empty from "../Empty/Empty"
 
 function Folders() {
-  const { folders, isDelete, toggleSelectFolder, handleContextMenu } =
-    useGlobalContext()
+  const { folders, isDelete, toggleSelectFolder, handleContextMenu } = useGlobalContext()
   const history = useHistory()
-  const handleClick = (id) =>
-    isDelete ? toggleSelectFolder(id) : history.push(`/${id}`)
+  const handleClick = (id) => (isDelete ? toggleSelectFolder(id) : history.push(`/${id}`))
 
   if (!folders.length) return <></>
   return (
@@ -41,19 +39,12 @@ function Folders() {
 }
 
 const SingleCard = ({ _id, title, data, clicked }) => {
-  const { isDelete, isRestore, toggleSelectCard, handleContextMenu } =
-    useGlobalContext()
+  const { isDelete, isRestore, toggleSelectCard, handleContextMenu } = useGlobalContext()
   const [face, setFace] = useState(true)
 
-  const handleClick = (id) =>
-    isDelete || isRestore ? toggleSelectCard(id) : setFace(!face)
+  const handleClick = (id) => (isDelete || isRestore ? toggleSelectCard(id) : setFace(!face))
   return (
-    <article
-      key={_id}
-      onClick={() => handleClick(_id)}
-      onContextMenu={(e) => handleContextMenu(e, _id, "card")}
-      className={clicked ? "selected" : undefined}
-    >
+    <article key={_id} onClick={() => handleClick(_id)} onContextMenu={(e) => handleContextMenu(e, _id, "card")} className={clicked ? "selected" : undefined}>
       <p>{face ? title : data}</p>
       <TiTick className={clicked ? "tick-on" : "tick-off"} />
     </article>
@@ -74,8 +65,7 @@ function Cards() {
 }
 
 function Container() {
-  const { contextMenuCordinate, isLoading, showBarCordinate, folders, cards } =
-    useGlobalContext()
+  const { contextMenuCordinate, isLoading, showBarCordinate, folders, cards } = useGlobalContext()
   return (
     <main className="Cardnote-container">
       {isLoading ? (
@@ -86,7 +76,7 @@ function Container() {
           <Cards />
           {!(folders.length + cards.length) && <Empty />}
           {contextMenuCordinate.show && <ContextMenu />}
-          {showBarCordinate.show && <ShowBar />}
+          {/* {showBarCordinate.show && <ShowBar />} */}
         </>
       )}
     </main>

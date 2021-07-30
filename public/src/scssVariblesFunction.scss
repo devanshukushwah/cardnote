@@ -32,12 +32,7 @@
   }
 }
 
-@mixin borderRadius(
-  $topLeft: 0,
-  $topRight: 0,
-  $bottomRight: 0,
-  $bottomLeft: 0
-) {
+@mixin borderRadius($topLeft: 0, $topRight: 0, $bottomRight: 0, $bottomLeft: 0) {
   border-top-left-radius: $topLeft;
   border-top-right-radius: $topRight;
   border-bottom-right-radius: $bottomRight;

@@ -50,16 +50,8 @@ const EyeInput = ({ handleChange }) => {
 
   return (
     <div className="password">
-      <input
-        onChange={handleChange}
-        type={showPassword ? "text" : "password"}
-        name="password"
-        placeholder="Password"
-        required
-      />
-      <span onClick={() => setShowPassword(!showPassword)}>
-        {showPassword ? <BsEye /> : <BsEyeSlash />}
-      </span>
+      <input onChange={handleChange} type={showPassword ? "text" : "password"} name="password" placeholder="Password" required />
+      <span onClick={() => setShowPassword(!showPassword)}>{showPassword ? <BsEye /> : <BsEyeSlash />}</span>
     </div>
   )
 }
@@ -69,8 +61,7 @@ export const NewPassword = () => {
   const [form, setForm] = useState({})
   const { token } = useParams()
   const { isSign, handleNewPassword } = useAuth()
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value })
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
   const handleSubmit = (e) => {
     e.preventDefault()
     handleNewPassword({ ...form, token, history })
@@ -86,13 +77,7 @@ export const NewPassword = () => {
       </div>
       <form onSubmit={handleSubmit}>
         <EyeInput handleChange={handleChange} />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm password"
-          onChange={handleChange}
-          required
-        />
+        <input type="password" name="confirmPassword" placeholder="Confirm password" onChange={handleChange} required />
         <button type="submit" required={true}>
           {isSign ? <CirculareLoader /> : "update password"}
         </button>
@@ -134,22 +119,17 @@ export const ForgetPassword = () => {
         <div className="line"></div>
       </div>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <input type="email" name="email" placeholder="Email" onChange={(e) => setEmail(e.target.value)} required />
         <button type="submit" disabled={isTimer}>
-          {isTimer ? (
-            <Timer setIsTimer={setIsTimer} />
-          ) : isSign ? (
-            <CirculareLoader />
-          ) : (
-            "Send Mail"
-          )}
+          {isTimer ? <Timer setIsTimer={setIsTimer} /> : isSign ? <CirculareLoader /> : "Send Mail"}
         </button>
+        <div>
+          <p>Go back to </p>
+          <p>
+            <Link to="/signin">Sign In</Link>
+          </p>
+          <p>page</p>
+        </div>
       </form>
     </Box>
   )
@@ -159,12 +139,7 @@ const RememberForget = ({ checkboxRef }) => {
   return (
     <div className="rememberForget">
       <div>
-        <input
-          type="checkbox"
-          name="remember"
-          id="remember"
-          ref={checkboxRef}
-        />
+        <input type="checkbox" name="remember" id="remember" ref={checkboxRef} />
         <label htmlFor="remember">Remember me</label>
       </div>
 
@@ -250,40 +225,14 @@ function Landing() {
       <form onSubmit={handleSubmit}>
         {isSignUp && (
           <div>
-            <input
-              onChange={handleChange}
-              type="text"
-              name="firstName"
-              placeholder="First name"
-              required
-            />
-            <input
-              onChange={handleChange}
-              type="text"
-              name="lastName"
-              placeholder="Last name"
-              required
-            />
+            <input onChange={handleChange} type="text" name="firstName" placeholder="First name" required />
+            <input onChange={handleChange} type="text" name="lastName" placeholder="Last name" required />
           </div>
         )}
-        <input
-          onChange={handleChange}
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-        />
+        <input onChange={handleChange} type="email" name="email" placeholder="Email" required />
         <EyeInput handleChange={handleChange} />
 
-        {isSignUp && (
-          <input
-            onChange={handleChange}
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm password"
-            required
-          />
-        )}
+        {isSignUp && <input onChange={handleChange} type="password" name="confirmPassword" placeholder="Confirm password" required />}
 
         {!isSignUp && <RememberForget checkboxRef={checkboxRef} />}
 

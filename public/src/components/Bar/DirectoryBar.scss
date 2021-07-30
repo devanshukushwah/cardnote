@@ -1,7 +1,6 @@
 @import "../../scssVariblesFunction.scss";
 main.DirectoryBar {
-  margin: 0 $cardnote-total-side-gap $cardnote-total-rows-gap
-    $cardnote-total-side-gap;
+  margin: 0 $cardnote-total-side-gap $cardnote-total-rows-gap $cardnote-total-side-gap;
   position: sticky;
   top: 5px;
   @include flex(space-between);
@@ -10,7 +9,7 @@ main.DirectoryBar {
   background-color: #fff;
   height: 35px;
   padding: 0 5px;
-  overflow: hidden;
+  // overflow: hidden;
   max-width: 100vw;
   z-index: 2;
   .clickedItem {
@@ -207,8 +206,7 @@ main.scrollOn {
 
 .homebutton {
   @include flex;
-  height: 100%;
-  padding: 2px 5px;
+  padding: 0px 5px;
   transition: 0.2s;
   border-radius: 4px;
   cursor: pointer;

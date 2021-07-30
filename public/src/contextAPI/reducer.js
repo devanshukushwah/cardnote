@@ -162,7 +162,7 @@ export const reducer = (state, action) => {
         cards: newCards,
         isMenuBar: false,
         showBarCordinate: closeShowBarCordinate,
-        contextMenuCordinate: action.payload.data,
+        contextMenuCordinate: action.payload,
       }
 
     case "CLOSE_CONTEXT_MENU_CORDINATE":
@@ -273,6 +273,12 @@ export const reducer = (state, action) => {
       }
 
     case "SET_SHOW_BAR_CORDINATE":
+      if (state.showBarCordinate.show && state.showBarCordinate.type === action.payload.type)
+        return {
+          ...state,
+          showBarCordinate: closeShowBarCordinate,
+          isDelete: false,
+        }
       return {
         ...state,
         showBarCordinate: action.payload,

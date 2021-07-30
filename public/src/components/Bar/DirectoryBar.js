@@ -13,17 +13,7 @@ import { useHistory } from "react-router-dom"
 import SelectedItem from "./SelectedItem"
 
 function DirectoryBar() {
-  const {
-    dirPath,
-    openModal,
-    isDelete,
-    deleteOff,
-    toggleDeleteOnOff,
-    toggleSelectAll,
-    clicked,
-    dispatch,
-    showBarCordinate,
-  } = useGlobalContext()
+  const { dirPath, openModal, isDelete, deleteOff, toggleDeleteOnOff, toggleSelectAll, clicked, dispatch, showBarCordinate } = useGlobalContext()
 
   const folderRef = useRef(null)
   const cardRef = useRef(null)
@@ -57,8 +47,7 @@ function DirectoryBar() {
   }
 
   const handleDone = () => {
-    if (clicked)
-      dispatch({ type: "SET_POP_TYPE", payload: "trashSelectAllConfirm" })
+    if (clicked) dispatch({ type: "SET_POP_TYPE", payload: "trashSelectAllConfirm" })
   }
   return (
     <>
@@ -70,10 +59,7 @@ function DirectoryBar() {
               const len = dirPath.length
               return (
                 <article key={index}>
-                  <p
-                    className={index === len - 1 && len !== 1 && "lastOne"}
-                    onClick={() => handleClick(index, page)}
-                  >
+                  <p className={index === len - 1 && len !== 1 && "lastOne"} onClick={() => handleClick(index, page)}>
                     {title}
                   </p>
                   {len !== 1 && index !== len - 1 && <GoChevronRight />}
@@ -84,10 +70,7 @@ function DirectoryBar() {
         </SelectedItem>
         <section className="buttons">
           <div className="leftBtns">
-            <button
-              onClick={() => toggleSelectAll(true)}
-              className={isDelete ? "show" : "hide"}
-            >
+            <button onClick={() => toggleSelectAll(true)} className={isDelete ? "show" : "hide"}>
               <BiSelection className="icon" />
               <p>Select All</p>
             </button>
@@ -95,59 +78,26 @@ function DirectoryBar() {
               <IoMdDoneAll className="icon" />
               <p>Done</p>
             </button>
-            <button
-              onClick={() => openModal("pdfPopup")}
-              className={!isDelete ? "show" : "hide"}
-            >
+            <button onClick={() => openModal("pdfPopup")} className={!isDelete ? "show" : "hide"}>
               <MdPictureAsPdf className="icon" />
-              <p>Pdf</p>
+              <p>Export</p>
             </button>
-            <button
-              onClick={toggleDeleteOnOff}
-              className={isDelete && "active"}
-            >
-              <FaTrash
-                className={isDelete ? "icon-active" : "icon"}
-                size={16}
-              />
+            <button onClick={toggleDeleteOnOff} className={isDelete && "active"}>
+              <FaTrash className={isDelete ? "icon-active" : "icon"} size={16} />
               <p>Remove</p>
             </button>
           </div>
           <div className="fullBtns">
-            <button
-              onClick={() => handleFullClick("card")}
-              ref={cardRef}
-              className={
-                showBarCordinate.show &&
-                showBarCordinate.type === "card" &&
-                "active"
-              }
-            >
-              <AddCard
-                className={
-                  showBarCordinate.show && showBarCordinate.type === "card"
-                    ? "icon-active"
-                    : "icon"
-                }
-              />
+            <button onClick={() => handleFullClick("card")} ref={cardRef} className={showBarCordinate.show && showBarCordinate.type === "card" && "active"}>
+              <AddCard className={showBarCordinate.show && showBarCordinate.type === "card" ? "icon-active" : "icon"} />
               <p>Card</p>
             </button>
             <button
               onClick={() => handleFullClick("folder")}
               ref={folderRef}
-              className={
-                showBarCordinate.show &&
-                showBarCordinate.type === "folder" &&
-                "active"
-              }
+              className={showBarCordinate.show && showBarCordinate.type === "folder" && "active"}
             >
-              <AddFolder
-                className={
-                  showBarCordinate.show && showBarCordinate.type === "folder"
-                    ? "icon-active"
-                    : "icon"
-                }
-              />
+              <AddFolder className={showBarCordinate.show && showBarCordinate.type === "folder" ? "icon-active" : "icon"} />
               <p>Folder</p>
             </button>
           </div>

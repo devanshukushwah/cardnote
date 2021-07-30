@@ -7,21 +7,16 @@ import "./ShowBar.scss"
 function ShowBar() {
   const { showBarCordinate } = useGlobalContext()
   const showBarRef = useRef(null)
-  const { x, y, type } = showBarCordinate
+  const { x, type } = showBarCordinate
   useEffect(() => {
     const barCordinate = showBarRef?.current
     if (!barCordinate) return
     barCordinate.style.right = `${x}px`
-    barCordinate.style.top = `${y + 37}px`
-  }, [showBarCordinate, x, y])
+  }, [showBarCordinate, x])
 
   return (
     <>
-      <main
-        className="cardnote-showbar"
-        style={{ top: `${y + 37}px`, right: `${x}px` }}
-        ref={showBarRef}
-      >
+      <main className="cardnote-showbar" style={{ right: `${x}px` }} ref={showBarRef}>
         {
           {
             folder: <FolderForm />,

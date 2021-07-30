@@ -33,7 +33,7 @@ function PdfPopup() {
             <input type="checkbox" id="folders" name="folders" onChange={handleChange} checked={checkBox.folders} />
             <label htmlFor="folders">Folders</label>
           </div> */}
-          <CreateCancel confirm="Print" />
+          <CreateCancel confirm="Export" />
         </form>
       </div>
     </>
