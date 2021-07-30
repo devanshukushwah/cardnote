@@ -93,6 +93,7 @@ export const GlobalProvider = ({ children }) => {
     API.get(`/cardnote-api/${id}`)
       .then((res) => dispatch({ type: "FETCH_DATA", payload: res.data }))
       .catch((err) => {
+        window.location.href = `${window.location.origin}/homepage`
         console.log(err)
       })
   }
