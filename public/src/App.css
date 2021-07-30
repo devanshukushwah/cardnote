@@ -6,6 +6,10 @@
 button {
   user-select: none;
 }
+body {
+  margin: 0 auto;
+  max-width: 1400px;
+}
 @font-face {
   font-family: "Roboto";
   src: url("./fonts/Roboto-Regular.ttf") format("woff2");
