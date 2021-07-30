@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import ContextMenu from "../ContextMenu/ContextMenu"
 import { useHistory } from "react-router-dom"
-import ShowBar from "../ShowBar/ShowBar"
 import SkeletonLoader from "../SkeletonLoader/SkeletonLoader"
 import "./Container.scss"
 import { FaFolder } from "react-icons/fa"
@@ -76,7 +75,6 @@ function Container() {
           <Cards />
           {!(folders.length + cards.length) && <Empty />}
           {contextMenuCordinate.show && <ContextMenu />}
-          {/* {showBarCordinate.show && <ShowBar />} */}
         </>
       )}
     </main>

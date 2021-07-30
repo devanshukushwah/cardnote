@@ -21,7 +21,7 @@ function Cardnote() {
         <TopHeader />
         <Bar />
         <Container />
-        <MenuBar />
+        {/* <MenuBar /> */}
         <Modal />
       </GlobalProvider>
     </>

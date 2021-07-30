@@ -26,7 +26,6 @@ function MenuBar() {
 
   const { id } = useParams()
   const { dispatch, isMenuBar, menuBarClose } = useGlobalContext()
-  const top = `${86 - window.scrollY}px`
   const handleLogout = () => {
     localStorage.clear()
     dispatch({ type: "SET_USER", payload: null })
@@ -43,18 +42,9 @@ function MenuBar() {
   }, [id])
 
   return (
-    <div
-      className={
-        isMenuBar ? `${styles.menuBar} ${styles.active}` : styles.menuBar
-      }
-      style={{ top }}
-    >
+    <div className={isMenuBar ? `${styles.menuBar} ${styles.active}` : styles.menuBar}>
       <button>
-        {id === "trash" ? (
-          <IconLabel to="/homepage" p="Homepage" icon={<TiHome />} />
-        ) : (
-          <IconLabel to="/trash" p="Recycle bin" icon={<FaTrash size={16} />} />
-        )}
+        {id === "trash" ? <IconLabel to="/homepage" p="Homepage" icon={<TiHome />} /> : <IconLabel to="/trash" p="Recycle bin" icon={<FaTrash size={16} />} />}
       </button>
       <button onClick={handleLogout}>
         <IconLabel p="Log out" icon={<RiLogoutBoxFill />} />

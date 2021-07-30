@@ -8,7 +8,7 @@ header.cardNote {
   padding: 5px 10px;
   background-color: #fff;
   height: 65px;
-  overflow: hidden;
+  // overflow: hidden;
   @include border;
   border-bottom: 4px solid #8cc63f;
   @include flex(space-between);
