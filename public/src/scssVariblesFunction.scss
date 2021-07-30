@@ -59,6 +59,15 @@
   }
 }
 
+@keyframes popIn {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
 // FOR CARDNOTE
 $cardnote-total-rows-gap: 5px;
 $cardnote-total-side-gap: 5px;
