@@ -26,7 +26,9 @@ function Folders() {
               onClick={() => handleClick(_id)}
               onContextMenu={(e) => handleContextMenu(e, _id, "folder")}
             >
-              <FaFolder className="icon" />
+              <div class="icon">
+                <FaFolder />
+              </div>
               <p>{title}</p>
               <TiTick className={clicked ? "tick-on" : "tick-off"} />
             </article>

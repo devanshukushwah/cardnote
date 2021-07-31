@@ -14,7 +14,9 @@ function SkeletonLoader() {
   for (let i = 0; i < length; i++) {
     folders.push(
       <article key={i}>
-        <FaFolder className="icon" />
+        <div class="icon">
+          <FaFolder />
+        </div>
         <div className={styles.p}>
           <span>
             <h1></h1>

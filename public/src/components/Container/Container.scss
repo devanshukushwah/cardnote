@@ -44,7 +44,7 @@ main.Cardnote-container {
 
   .Cardnote-Folders {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(20%, 1fr));
     gap: $gap;
     grid-auto-rows: minmax(38px, auto);
     padding-bottom: $cardnote-total-rows-gap;
@@ -61,17 +61,25 @@ main.Cardnote-container {
       cursor: pointer;
       position: relative;
       @include popAnimation();
+      // width: inherit;
       .icon {
-        font-size: 24px;
-        color: #8cc63f;
+        @include flex;
+        & > * {
+          font-size: 24px;
+          color: #8cc63f;
+        }
       }
       p {
+        // width: inherit;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+
         // @include montFont;
         font-family: "Roboto", "san-serif";
         font-size: 1rem;
-        max-width: inherit;
-        overflow: hidden !important;
-        text-overflow: ellipsis;
+        // overflow: hidden !important;
+        // text-overflow: ellipsis;
       }
       @include tick;
       &:active {
@@ -100,7 +108,6 @@ main.Cardnote-container {
       gap: 4px;
       position: relative;
       @include popAnimation();
-
       &:active {
         @include cardshadow;
       }
@@ -126,7 +133,9 @@ main.Cardnote-container {
     }
   }
   @media screen and (max-width: 1250px) {
-    .col-folder,
+    .col-folder {
+      grid-template-columns: repeat(4, minmax(20%, 1fr));
+    }
     .col-card {
       grid-template-columns: repeat(4, 1fr);
     }
@@ -136,9 +145,6 @@ main.Cardnote-container {
     .col-card {
       grid-template-columns: 1fr 1fr;
     }
-    .col-folder {
-      grid-template-columns: repeat(4, 1fr);
-    }
   }
 
   @media screen and (max-width: 600px) {
@@ -146,7 +152,7 @@ main.Cardnote-container {
       grid-template-columns: 1fr;
     }
     .col-folder {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(40%, 1fr));
     }
   }
 }
