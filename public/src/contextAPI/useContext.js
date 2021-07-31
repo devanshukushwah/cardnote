@@ -29,8 +29,7 @@ const defaultState = {
     type: "folder",
   },
   showBarCordinate: {
-    x: "980.503",
-    y: "128.336",
+    x: "50",
     type: "nothing",
     show: false,
   },

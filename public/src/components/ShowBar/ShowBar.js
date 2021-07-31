@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import { FolderForm, CardForm } from "../Modal/SubComponent/Form"
 
-import "./ShowBar.scss"
+import styles from "./ShowBar.module.scss"
 
 function ShowBar() {
   const { showBarCordinate } = useGlobalContext()
@@ -11,12 +11,16 @@ function ShowBar() {
   useEffect(() => {
     const barCordinate = showBarRef?.current
     if (!barCordinate) return
-    barCordinate.style.right = `${x}px`
+    barCordinate.style.right = `${x || 50}px`
   }, [showBarCordinate, x])
 
   return (
     <>
-      <main className="cardnote-showbar" style={{ right: `${x}px` }} ref={showBarRef}>
+      <main
+        className={showBarCordinate.show ? `${styles.cardnote_showbar_active} ${styles.cardnote_showbar}` : styles.cardnote_showbar}
+        style={{ right: `${x || 50}px` }}
+        ref={showBarRef}
+      >
         {
           {
             folder: <FolderForm />,

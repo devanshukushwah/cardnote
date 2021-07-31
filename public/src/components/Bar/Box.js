@@ -23,7 +23,7 @@ function Box({ children }) {
     <>
       <main className={`DirectoryBar  ${isScroll ? "scrollOn" : undefined}`}>
         {children}
-        {showBarCordinate.show && <ShowBar />}
+        <ShowBar />
       </main>
     </>
   )

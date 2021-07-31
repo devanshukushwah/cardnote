@@ -26,8 +26,12 @@ export default function makePdfFunction({ dispatch, name, cards }) {
   lineNo += 5
   doc.setFontSize(14)
   for (let i = 0; i < cards.length; i++) {
+    doc.setFontSize(12)
+    doc.setTextColor("black")
     printParagraph("normal", cards[i].title)
     lineNo += 1
+    doc.setFontSize(11)
+    doc.setTextColor("#333")
     printParagraph("normal", cards[i].data)
     lineNo += 5
   }
