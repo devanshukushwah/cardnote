@@ -11,14 +11,14 @@ function ShowBar() {
   useEffect(() => {
     const barCordinate = showBarRef?.current
     if (!barCordinate) return
-    barCordinate.style.right = `${x || 50}px`
+    barCordinate.style.right = `${x}px`
   }, [showBarCordinate, x])
 
   return (
     <>
       <main
         className={showBarCordinate.show ? `${styles.cardnote_showbar_active} ${styles.cardnote_showbar}` : styles.cardnote_showbar}
-        style={{ right: `${x || 50}px` }}
+        style={{ right: `${x}px` }}
         ref={showBarRef}
       >
         {
