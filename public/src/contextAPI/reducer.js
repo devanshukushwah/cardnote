@@ -188,6 +188,22 @@ export const reducer = (state, action) => {
         cards: newCards,
         showBarCordinate: closeShowBarCordinate,
       }
+    case "CARDS_ALIGNED":
+      newFolders = state.folders.map((item) => {
+        return { ...item, clicked: false }
+      })
+      newCards = action.payload.map((item) => {
+        return { ...item, clicked: false }
+      })
+      return {
+        ...state,
+        folders: newFolders,
+        cards: newCards,
+        isModal: false,
+        isSubmitLoading: false,
+        modalType: "card",
+        showBarCordinate: closeShowBarCordinate,
+      }
 
     case "DELETE_ON":
       console.log(closeShowBarCordinate)
@@ -307,6 +323,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         contextMenuCordinate: closeContextMenuCordinate,
+        alignCards: state.cards,
         isModal: true,
         modalType: "alignCardsPosition",
       }

@@ -233,9 +233,9 @@ export const GlobalProvider = ({ children }) => {
 
   const makePdf = (name) => makePdfFunction({ name, cards: state.cards, dispatch })
 
-  const handleAlignSubmit = () => {
+  const handleAlignSubmit = (alignCards) => {
     dispatch({ type: "SUBMIT_LOADING_ON" })
-    const submitCommands = state.cards.map((item, i) => {
+    const submitCommands = alignCards.map((item, i) => {
       return {
         updateOne: {
           filter: { _id: item._id },
@@ -245,8 +245,8 @@ export const GlobalProvider = ({ children }) => {
       }
     })
     API.put("/cardnote-api/updateorder", submitCommands)
-      .then(() => closeModal())
-      .catch((err) => console.log(err))
+      .then(() => dispatch({ type: "CARDS_ALIGNED", payload: alignCards }))
+      .catch((err) => alert(err.message))
   }
 
   const value = {

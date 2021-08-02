@@ -7,11 +7,12 @@ import styles from "./AlignCardsPosition.module.scss"
 
 function AlignCardsPosition() {
   const { cards, handleAlignSubmit } = useGlobalContext()
+  const alignCards = [...cards]
   const handleOnDragEnd = (param) => {
     const srcIndex = param.source.index
     const desIndex = param.destination?.index
     if (desIndex === undefined || desIndex === null || srcIndex === undefined || srcIndex === null) return false
-    cards.splice(desIndex, 0, cards.splice(srcIndex, 1)[0])
+    alignCards.splice(desIndex, 0, alignCards.splice(srcIndex, 1)[0])
   }
   return (
     <>
@@ -20,7 +21,7 @@ function AlignCardsPosition() {
         <Droppable droppableId="droppable-1">
           {(provided, _) => (
             <div className={styles.container} ref={provided.innerRef} {...provided.droppableProps}>
-              {cards.map((item, i) => (
+              {alignCards.map((item, i) => (
                 <Draggable key={item._id} draggableId={"draggable-" + item._id} index={i}>
                   {(provided, snapshot) => (
                     <div className={styles.box} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
@@ -37,7 +38,7 @@ function AlignCardsPosition() {
           )}
         </Droppable>
       </DragDropContext>
-      <CreateCancel style={{ paddingRight: "10px" }} confirm="Done" handleFunction={handleAlignSubmit} />
+      <CreateCancel style={{ paddingRight: "10px" }} confirm="Done" handleFunction={() => handleAlignSubmit(alignCards)} />
     </>
   )
 }
