@@ -19,7 +19,7 @@ const defaultState = {
   isDelete: false,
   isRestore: false,
   clicked: 0,
-  modalType: "card",
+  modalType: "nothing",
   popType: "delete",
   contextMenuCordinate: {
     x: "0",
@@ -98,6 +98,8 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const addFolder = (title) => {
+    if (!title) return false
+
     dispatch({ type: "SUBMIT_LOADING_ON" })
     const data = {
       title,
@@ -111,6 +113,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const addCard = (title, data) => {
+    if (!title || !data) return false
     dispatch({ type: "SUBMIT_LOADING_ON" })
     const dataToSend = {
       title,
@@ -180,6 +183,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const renameFolderFromServer = (newtitle) => {
+    if (!newtitle) return false
     dispatch({ type: "SUBMIT_LOADING_ON" })
     const id = state.contextMenuCordinate.id
     const data = {
@@ -192,6 +196,7 @@ export const GlobalProvider = ({ children }) => {
   }
 
   const renameCardFromServer = (newtitle, newdata) => {
+    if (!newtitle || !newdata) return false
     dispatch({ type: "SUBMIT_LOADING_ON" })
     const id = state.contextMenuCordinate.id
     const data = {
@@ -228,6 +233,22 @@ export const GlobalProvider = ({ children }) => {
 
   const makePdf = (name) => makePdfFunction({ name, cards: state.cards, dispatch })
 
+  const handleAlignSubmit = () => {
+    dispatch({ type: "SUBMIT_LOADING_ON" })
+    const submitCommands = state.cards.map((item, i) => {
+      return {
+        updateOne: {
+          filter: { _id: item._id },
+          update: { $set: { order: i } },
+          upsert: true,
+        },
+      }
+    })
+    API.put("/cardnote-api/updateorder", submitCommands)
+      .then(() => closeModal())
+      .catch((err) => console.log(err))
+  }
+
   const value = {
     ...state,
     dispatch,
@@ -255,6 +276,7 @@ export const GlobalProvider = ({ children }) => {
     menuBarClose,
     toggleMenuBar,
     makePdf,
+    handleAlignSubmit,
   }
   return <Consumer.Provider value={value}>{children}</Consumer.Provider>
 }

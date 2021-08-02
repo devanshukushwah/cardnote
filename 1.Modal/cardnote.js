@@ -18,6 +18,7 @@ const cardSchema = new mongoose.Schema({
   trash: { type: Boolean, required: true, default: false },
   createdtime: { type: Date, required: true, default: Date.now },
   editedtime: { type: Date, required: true, default: Date.now },
+  order: { type: Number, required: true, default: 0 },
 })
 
 const folders = (USER) => mongoose.model("folders", folderSchema, `${USER}-F`)

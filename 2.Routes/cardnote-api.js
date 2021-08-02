@@ -11,6 +11,7 @@ const {
   renameCard,
   renameFolder,
   fetchAllTrash,
+  updateOrder,
 } = require("../3.Functions/cardnote.js")
 
 router.get("/", auth, fetchAll)
@@ -19,6 +20,7 @@ router.get("/:parent", auth, fetchOneDirectory)
 router.post("/", auth, postData)
 router.put("/folder", auth, renameFolder)
 router.put("/card", auth, renameCard)
+router.put("/updateorder", auth, updateOrder)
 router.delete("/", auth, deleteElements)
 router.put("/trash", auth, moveToTrash)
 router.put("/restore", auth, restoreToTrash)

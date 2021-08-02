@@ -70,16 +70,11 @@ main.Cardnote-container {
         }
       }
       p {
-        // width: inherit;
         white-space: nowrap;
         overflow: hidden !important;
         text-overflow: ellipsis;
-
-        // @include montFont;
         font-family: "Roboto", "san-serif";
         font-size: 1rem;
-        // overflow: hidden !important;
-        // text-overflow: ellipsis;
       }
       @include tick;
       &:active {

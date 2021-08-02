@@ -9,6 +9,7 @@ export const reducer = (state, action) => {
     },
     closeShowBarCordinate = {
       ...state.showBarCordinate,
+      type: "nothing",
       show: false,
     },
     newClicked
@@ -181,6 +182,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         isModal: false,
+        isSubmitLoading: false,
         modalType: "card",
         folders: newFolders,
         cards: newCards,
@@ -300,6 +302,13 @@ export const reducer = (state, action) => {
         popType: "remove",
         isModal: true,
         modalType: "confirmPopup",
+      }
+    case "CONTEXT_ALIGN_CARD":
+      return {
+        ...state,
+        contextMenuCordinate: closeContextMenuCordinate,
+        isModal: true,
+        modalType: "alignCardsPosition",
       }
 
     case "CONTEXT_DELETE":

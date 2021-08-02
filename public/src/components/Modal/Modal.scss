@@ -95,15 +95,19 @@ main.cardnote-modal {
   }
   .modal {
     $padding: 0 10px;
+    padding-bottom: 5px;
     .header {
-      @include montFont;
+      // @include montFont;
+      @include robotoFont;
+      font-size: 18px;
+      font-weight: 400;
       @include flex(space-between);
       height: 30px;
       border-bottom: 2px solid #8cc63f;
       padding: $padding;
     }
     .container {
-      padding: 10px 10px;
+      padding: 10px;
       p {
         @include flex;
         @include robotoFont;

@@ -16,7 +16,7 @@ export const FolderForm = () => {
   return (
     <div className="modal-container">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" placeholder="Title" maxLength={30} ref={titleRef} autoFocus />
+        <input type="text" placeholder="Title" maxLength={30} ref={titleRef} required="true" autoFocus />
         <CreateCancel confirm="Add" />
       </form>
     </div>
@@ -38,8 +38,8 @@ export const CardForm = () => {
   return (
     <div className="modal-container">
       <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" placeholder="Front" ref={titleRef} autoFocus />
-        <input type="text" placeholder="Back" ref={dataRef} />
+        <input type="text" placeholder="Front" ref={titleRef} required="true" autoFocus />
+        <input type="text" placeholder="Back" ref={dataRef} required="true" />
         <CreateCancel confirm="Add" />
       </form>
     </div>

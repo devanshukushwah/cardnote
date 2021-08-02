@@ -6,13 +6,13 @@ import RenameCardForm from "./SubComponent/RenameCardForm"
 import RenameFolderForm from "./SubComponent/RenameFolderForm"
 import ConfirmPopup from "./ConfirmPopup"
 import PdfPopup from "./PdfPopup"
+import AlignCardsPosition from "./AlignCardsPosition"
+
 function Modal() {
   const { isModal, modalType } = useGlobalContext()
 
   return (
-    <main
-      className={isModal ? "cardnote-modal cardnote-active" : "cardnote-modal"}
-    >
+    <main className={isModal ? "cardnote-modal cardnote-active" : "cardnote-modal"}>
       <div className="background"></div>
       <div className="modal">
         {{
@@ -20,6 +20,7 @@ function Modal() {
           renamecard: <RenameCardForm />,
           confirmPopup: <ConfirmPopup />,
           pdfPopup: <PdfPopup />,
+          alignCardsPosition: <AlignCardsPosition />,
         }[modalType] ||
           (isModal && <ModalForFolderCard />)}
       </div>

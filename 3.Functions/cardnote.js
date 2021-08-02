@@ -39,14 +39,21 @@ const fetchOneDirectory = async (req, res) => {
     const author = req.userId
     let { parent } = req.params
     if (!parent) return res.json({ message: "id is null" })
-    const fetchFolders = await folders(author).find({
-      parent,
-      trash: false,
-    })
-    const fetchCards = await cards(author).find({
-      parent,
-      trash: false,
-    })
+    const fetchFolders = await folders(author)
+      .find({
+        parent,
+        trash: false,
+        // $orderby: { order: 1 },
+      })
+      .sort({ order: 1 })
+    const fetchCards = await cards(author)
+      .find({
+        parent,
+        trash: false,
+        // $orderby: { order: 1 },
+      })
+      .sort({ order: 1 })
+
     let fetchDirectoryPath
 
     if (parent === "homepage") {
@@ -77,8 +84,7 @@ const postData = async (req, res) => {
     const { title, data, type, directoryPath } = req.body
     let { parent } = req.body
     const author = req.userId
-    if (!parent || !title || !type)
-      return res.status(422).json({ message: `some value are null` })
+    if (!parent || !title || !type) return res.status(422).json({ message: `some value are null` })
 
     let insertedItem
     if (type === "folder") {
@@ -122,8 +128,7 @@ const deleteElements = async (req, res) => {
         $in: itemlist,
       },
     })
-    if (!tempFolders && !tempCards)
-      return res.status(422).json({ message: "error" })
+    if (!tempFolders && !tempCards) return res.status(422).json({ message: "error" })
 
     res.status(200).json({ message: "success" })
   } catch (error) {
@@ -152,8 +157,7 @@ const moveToTrash = async (req, res) => {
       },
       { alter: true }
     )
-    if (!tempFolder && !tempCard)
-      return res.status(422).json({ message: "error" })
+    if (!tempFolder && !tempCard) return res.status(422).json({ message: "error" })
     res.status(200).json({ message: "success" })
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -181,8 +185,7 @@ const restoreToTrash = async (req, res) => {
       },
       { alter: true }
     )
-    if (!tempFolder && !tempCard)
-      return res.status(422).json({ message: "error" })
+    if (!tempFolder && !tempCard) return res.status(422).json({ message: "error" })
     res.status(200).json({ message: "success" })
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -194,14 +197,16 @@ const renameFolder = async (req, res) => {
   try {
     const { id, newtitle } = req.body
     const author = req.userId
-    if (!id || !newtitle)
-      return res.status(400).json({ message: "id or new title is null" })
+    if (!id || !newtitle) return res.status(400).json({ message: "id or new title is null" })
     const newFolder = await folders(author).updateOne(
       { _id: id },
       {
         $set: { title: newtitle, editedtime: Date.now() },
       }
     )
+
+    if (!newFolder) return res.status(402).send()
+
     res.status(200).json(newFolder)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -214,14 +219,29 @@ const renameCard = async (req, res) => {
     const { id, newtitle, newdata } = req.body
     const author = req.userId
 
-    if (!id || !newtitle || !newdata)
-      return res.status(400).json({ message: "id or new title is null" })
+    if (!id || !newtitle || !newdata) return res.status(400).json({ message: "id or new title is null" })
     const newCard = await cards(author).updateOne(
       { _id: id },
       {
         $set: { title: newtitle, data: newdata, editedtime: Date.now() },
       }
     )
+    if (!newCard) return res.status(402).send()
+
+    res.status(200).json(newCard)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
+// UPDATE ORDER OF CARD
+const updateOrder = async (req, res) => {
+  try {
+    const updateCommands = req.body
+    const author = req.userId
+    if (!updateCommands) return res.status(400).json({ message: "id or new title is null" })
+    const newCard = await cards(author).bulkWrite(updateCommands)
+    if (!newCard) return res.status(402).send()
     res.status(200).json(newCard)
   } catch (error) {
     res.status(500).json({ message: error.message })
@@ -238,4 +258,5 @@ module.exports = {
   renameFolder,
   renameCard,
   fetchAllTrash,
+  updateOrder,
 }
