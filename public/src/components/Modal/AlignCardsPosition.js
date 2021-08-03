@@ -27,7 +27,7 @@ function AlignCardsPosition() {
                     <div className={styles.box} ref={provided.innerRef} {...provided.draggableProps}>
                       <p>{item.title}</p>
                       <span style={{ transform: snapshot.isDragging ? "rotate(-20deg)" : "rotate(0deg)" }} {...provided.dragHandleProps}>
-                        <MdDragHandle size={19} fill="#333" />
+                        <MdDragHandle size={22} fill="#333" />
                       </span>
                     </div>
                   )}

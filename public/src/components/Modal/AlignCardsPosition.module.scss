@@ -31,9 +31,13 @@
   background-color: #fff;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 5px 10px;
   border-bottom: 1px solid #e7e7e7;
   span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: 0.2s;
   }
   p {
