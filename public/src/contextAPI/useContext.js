@@ -10,6 +10,7 @@ const Consumer = React.createContext()
 const defaultState = {
   folders: [],
   cards: [],
+  alignCards: [],
   dirPath: [{ title: "Home", page: "homepage" }],
   user: null,
   isLoading: true,
@@ -233,9 +234,9 @@ export const GlobalProvider = ({ children }) => {
 
   const makePdf = (name) => makePdfFunction({ name, cards: state.cards, dispatch })
 
-  const handleAlignSubmit = (alignCards) => {
+  const handleAlignSubmit = () => {
     dispatch({ type: "SUBMIT_LOADING_ON" })
-    const submitCommands = alignCards.map((item, i) => {
+    const submitCommands = state.alignCards.map((item, i) => {
       return {
         updateOne: {
           filter: { _id: item._id },
@@ -245,7 +246,7 @@ export const GlobalProvider = ({ children }) => {
       }
     })
     API.put("/cardnote-api/updateorder", submitCommands)
-      .then(() => dispatch({ type: "CARDS_ALIGNED", payload: alignCards }))
+      .then(() => dispatch({ type: "CARDS_ALIGNED" }))
       .catch((err) => alert(err.message))
   }
 

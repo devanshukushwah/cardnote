@@ -6,8 +6,8 @@ import CreateCancel from "../CreateCancel/CreateCancel"
 import styles from "./AlignCardsPosition.module.scss"
 
 function AlignCardsPosition() {
-  const { cards, handleAlignSubmit } = useGlobalContext()
-  const alignCards = [...cards]
+  const { alignCards, handleAlignSubmit } = useGlobalContext()
+
   const handleOnDragEnd = (param) => {
     const srcIndex = param.source.index
     const desIndex = param.destination?.index
@@ -38,7 +38,7 @@ function AlignCardsPosition() {
           )}
         </Droppable>
       </DragDropContext>
-      <CreateCancel style={{ paddingRight: "10px" }} confirm="Done" handleFunction={() => handleAlignSubmit(alignCards)} />
+      <CreateCancel style={{ paddingRight: "10px" }} confirm="Done" handleFunction={handleAlignSubmit} />
     </>
   )
 }

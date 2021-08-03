@@ -192,7 +192,7 @@ export const reducer = (state, action) => {
       newFolders = state.folders.map((item) => {
         return { ...item, clicked: false }
       })
-      newCards = action.payload.map((item) => {
+      newCards = state.alignCards.map((item) => {
         return { ...item, clicked: false }
       })
       return {
@@ -323,7 +323,7 @@ export const reducer = (state, action) => {
       return {
         ...state,
         contextMenuCordinate: closeContextMenuCordinate,
-        alignCards: state.cards,
+        alignCards: [...state.cards],
         isModal: true,
         modalType: "alignCardsPosition",
       }
