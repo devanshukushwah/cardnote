@@ -24,9 +24,9 @@ function AlignCardsPosition() {
               {alignCards.map((item, i) => (
                 <Draggable key={item._id} draggableId={"draggable-" + item._id} index={i}>
                   {(provided, snapshot) => (
-                    <div className={styles.box} ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                    <div className={styles.box} ref={provided.innerRef} {...provided.draggableProps}>
                       <p>{item.title}</p>
-                      <span style={{ transform: snapshot.isDragging ? "rotate(-20deg)" : "rotate(0deg)" }}>
+                      <span style={{ transform: snapshot.isDragging ? "rotate(-20deg)" : "rotate(0deg)" }} {...provided.dragHandleProps}>
                         <MdDragHandle size={19} fill="#333" />
                       </span>
                     </div>
