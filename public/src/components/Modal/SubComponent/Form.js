@@ -1,6 +1,6 @@
 import React, { useRef } from "react"
 import { useGlobalContext } from "../../../contextAPI/useContext"
-import "./Form.scss"
+import styles from "./Form.module.scss"
 import CreateCancel from "../../CreateCancel/CreateCancel"
 
 export const FolderForm = () => {
@@ -14,12 +14,12 @@ export const FolderForm = () => {
   }
 
   return (
-    <div className="modal-container">
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" placeholder="Title" maxLength={30} ref={titleRef} required="true" autoFocus />
-        <CreateCancel confirm="Add" />
-      </form>
-    </div>
+    // <div className="modal-container">
+    <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+      <input type="text" placeholder="Title" maxLength={30} ref={titleRef} required="true" autoFocus />
+      <CreateCancel confirm="Add" />
+    </form>
+    // </div>
   )
 }
 
@@ -36,12 +36,12 @@ export const CardForm = () => {
   }
 
   return (
-    <div className="modal-container">
-      <form onSubmit={(e) => handleSubmit(e)}>
-        <input type="text" placeholder="Front" ref={titleRef} required="true" autoFocus />
-        <input type="text" placeholder="Back" ref={dataRef} required="true" />
-        <CreateCancel confirm="Add" />
-      </form>
-    </div>
+    // <div className="modal-container">
+    <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+      <input type="text" placeholder="Front" ref={titleRef} required="true" autoFocus />
+      <input type="text" placeholder="Back" ref={dataRef} required="true" />
+      <CreateCancel confirm="Add" />
+    </form>
+    // </div>
   )
 }

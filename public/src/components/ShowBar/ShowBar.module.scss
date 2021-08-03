@@ -1,6 +1,7 @@
 @import "../../scssVariblesFunction.scss";
 .cardnote_showbar {
   position: absolute;
+  padding-bottom: 5px;
   background-color: #fff;
   @include border();
   border-radius: 4px;

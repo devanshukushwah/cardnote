@@ -86,7 +86,9 @@ main.Cardnote-container {
 
   .Cardnote-Cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    // grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(20%, 1fr));
+
     gap: $gap;
     padding-bottom: $cardnote-total-rows-gap;
     grid-auto-rows: minmax(90px, auto);
@@ -111,6 +113,9 @@ main.Cardnote-container {
         font-family: "Roboto", "san-serif";
         font-size: 1rem;
         text-align: center;
+        white-space: normal;
+        overflow: hidden !important;
+        // text-overflow: ellipsis;
       }
       @include tick;
       .tick-on {
@@ -132,19 +137,20 @@ main.Cardnote-container {
       grid-template-columns: repeat(4, minmax(20%, 1fr));
     }
     .col-card {
-      grid-template-columns: repeat(4, 1fr);
+      // grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(15%, 1fr));
     }
   }
 
   @media screen and (max-width: 900px) {
     .col-card {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(40%, 1fr));
     }
   }
 
   @media screen and (max-width: 600px) {
     .col-card {
-      grid-template-columns: 1fr;
+      grid-template-columns: 100%;
     }
     .col-folder {
       grid-template-columns: repeat(2, minmax(40%, 1fr));

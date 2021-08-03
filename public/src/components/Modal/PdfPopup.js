@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import { useGlobalContext } from "../../contextAPI/useContext"
 import CreateCancel from "../CreateCancel/CreateCancel"
+import styles from "./SubComponent/Form.module.scss"
 
 function PdfPopup() {
   const { makePdf, dirPath } = useGlobalContext()
@@ -22,10 +23,10 @@ function PdfPopup() {
   return (
     <>
       <div className="header">Pdf</div>
-      <div className="modal-container">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <input type="text" placeholder="Pdf Title" ref={titleRef} autoFocus />
-          {/* <div className="checkBox">
+      {/* <div className={}> */}
+      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+        <input type="text" placeholder="Pdf Title" ref={titleRef} autoFocus />
+        {/* <div className="checkBox">
             <input type="checkbox" id="cards" name="cards" onChange={handleChange} checked={checkBox.cards} />
             <label htmlFor="cards">Cards</label>
           </div>
@@ -33,9 +34,9 @@ function PdfPopup() {
             <input type="checkbox" id="folders" name="folders" onChange={handleChange} checked={checkBox.folders} />
             <label htmlFor="folders">Folders</label>
           </div> */}
-          <CreateCancel confirm="Export" />
-        </form>
-      </div>
+        <CreateCancel confirm="Export" />
+      </form>
+      {/* </div> */}
     </>
   )
 }

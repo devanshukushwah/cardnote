@@ -79,7 +79,7 @@ export const reducer = (state, action) => {
     case "REMOVE_DATA":
       newFolders = state.folders.filter((item) => item._id !== action.payload)
       newCards = state.cards.filter((item) => item._id !== action.payload)
-      return { ...state, folders: newFolders, cards: newCards, isModal: false }
+      return { ...state, folders: newFolders, cards: newCards, isModal: false, isSubmitLoading: false }
 
     case "RENAME_FOLDER":
       newFolders = state.folders.map((item) => {
