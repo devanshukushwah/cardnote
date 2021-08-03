@@ -110,7 +110,7 @@ export const GlobalProvider = ({ children }) => {
     }
     API.post(`/cardnote-api/`, data)
       .then((res) => dispatch({ type: "ADD_FOLDER", payload: res.data }))
-      .catch((err) => console.log(err.response.data))
+      .catch((err) => alert(err.message))
   }
 
   const addCard = (title, data) => {
@@ -124,7 +124,7 @@ export const GlobalProvider = ({ children }) => {
     }
     API.post(`/cardnote-api/`, dataToSend)
       .then((res) => dispatch({ type: "ADD_CARD", payload: res.data }))
-      .catch((err) => console.log(err))
+      .catch((err) => alert(err.message))
   }
 
   const moveOneToTrash = (id) => {
@@ -132,7 +132,7 @@ export const GlobalProvider = ({ children }) => {
     API.put("/cardnote-api/trash", { itemlist: [id] })
       .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
       .catch((err) => {
-        console.log(err)
+        alert(err.message)
       })
   }
 
@@ -141,7 +141,7 @@ export const GlobalProvider = ({ children }) => {
     API.delete("/cardnote-api", { data: [id] })
       .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
       .catch((err) => {
-        console.log(err)
+        alert(err.message)
       })
   }
 
@@ -150,7 +150,7 @@ export const GlobalProvider = ({ children }) => {
     API.put("/cardnote-api/restore", { itemlist: [id] })
       .then(() => dispatch({ type: "REMOVE_DATA", payload: id }))
       .catch((err) => {
-        console.log(err)
+        alert(err.message)
       })
   }
   const restoreFromTrash = () => {
@@ -159,7 +159,7 @@ export const GlobalProvider = ({ children }) => {
     API.put("/cardnote-api/restore", { itemlist })
       .then(() => fetchData())
       .catch((err) => {
-        console.log(err)
+        alert(err.message)
       })
   }
 
@@ -169,7 +169,7 @@ export const GlobalProvider = ({ children }) => {
     API.put("/cardnote-api/trash", { itemlist })
       .then(() => fetchData())
       .catch((err) => {
-        console.log(err)
+        alert(err.message)
       })
   }
 
@@ -179,7 +179,7 @@ export const GlobalProvider = ({ children }) => {
     API.delete("/cardnote-api/", { data: itemlist })
       .then(() => fetchData())
       .catch((err) => {
-        console.log(err)
+        alert(err.message)
       })
   }
 
@@ -193,7 +193,7 @@ export const GlobalProvider = ({ children }) => {
     }
     API.put("/cardnote-api/folder", data)
       .then(() => dispatch({ type: "RENAME_FOLDER", payload: data }))
-      .catch((err) => console.log(err))
+      .catch((err) => alert(err.message))
   }
 
   const renameCardFromServer = (newtitle, newdata) => {
@@ -207,7 +207,7 @@ export const GlobalProvider = ({ children }) => {
     }
     API.put("/cardnote-api/card", data)
       .then(() => dispatch({ type: "RENAME_CARD", payload: data }))
-      .catch((err) => console.log(err))
+      .catch((err) => alert(err.message))
   }
 
   const toggleSelectFolder = (id) => dispatch({ type: "TOGGLE_SELECT_FOLDER", payload: id })
