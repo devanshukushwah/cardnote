@@ -197,10 +197,10 @@ export const reducer = (state, action) => {
       })
       return {
         ...state,
-        folders: newFolders,
-        cards: newCards,
         isModal: false,
         isSubmitLoading: false,
+        folders: newFolders,
+        cards: newCards,
         modalType: "card",
         showBarCordinate: closeShowBarCordinate,
       }
