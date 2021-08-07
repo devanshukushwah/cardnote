@@ -8,6 +8,8 @@ export const AuthProvider = ({ children }) => {
   const [isSign, setIsSign] = useState(false)
   const [isMessage, setMessage] = useState(false)
   const [messageType, setMessageType] = useState("")
+  const emailExpression = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+  const regex = new RegExp(emailExpression)
 
   const API = axios.create({ baseURL: API_URL })
   const messageOpen = (message) => {
@@ -27,8 +29,10 @@ export const AuthProvider = ({ children }) => {
   }
 
   const handleSignIn = (formData, history, check) => {
-    console.log("signin")
+    if (!formData.email.match(regex)) return handleMessage("Email is Invalid")
+
     setIsSign(true)
+
     API.post("/user/signin", formData)
       .then((res) => {
         const { result, token } = res.data
@@ -42,6 +46,8 @@ export const AuthProvider = ({ children }) => {
       .catch((err) => handleMessage(err?.response?.data?.message))
   }
   const handleSignUp = (formData, history) => {
+    if (!formData.email.match(regex)) return handleMessage("Email is Invalid")
+
     if (formData.password !== formData.confirmPassword) {
       handleMessage("password not match")
       return
@@ -70,8 +76,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   const handleNewPassword = (props) => {
-    if (props.password !== props.confirmPassword)
-      return handleMessage("password not match")
+    if (props.password !== props.confirmPassword) return handleMessage("password not match")
     setIsSign(true)
     API.post("/user/new-password", props)
       .then((res) => {

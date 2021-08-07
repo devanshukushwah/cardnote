@@ -24,14 +24,14 @@ function DeleteConfirm({ type, face, id }) {
   const { deleteOneFromServer } = useGlobalContext()
   return (
     <>
-      <div>
+      <div className="pCenter">
         <p>
           Paramanent delete {type} <i>"{face}"</i>&nbsp;
         </p>
         <p>?</p>
       </div>
       {/* <YesNoBtn fntn={() => deleteOneFromServer(id)} /> */}
-      <CreateCancel handleFunction={() => deleteOneFromServer(id)} />
+      <CreateCancel handleFunction={() => deleteOneFromServer(id)} confirm="Delete" />
     </>
   )
 }
@@ -39,15 +39,14 @@ function RemoveConfirm({ type, face, id }) {
   const { moveOneToTrash } = useGlobalContext()
   return (
     <>
-      <div>
+      <div className="pCenter">
         <p>
           Remove {type} <i>"{face}"</i>&nbsp;
         </p>
-
         <p>?</p>
       </div>
       {/* <YesNoBtn fntn={() => moveOneToTrash(id)} /> */}
-      <CreateCancel handleFunction={() => moveOneToTrash(id)} />
+      <CreateCancel handleFunction={() => moveOneToTrash(id)} confirm="Remove" />
     </>
   )
 }
@@ -56,14 +55,14 @@ function RestoreConfirm({ type, face, id }) {
   const { restoreOneFromTrash } = useGlobalContext()
   return (
     <>
-      <div>
+      <div className="pCenter">
         <p>
           Restore {type} <i>"{face}"</i>&nbsp;
         </p>
         <p>?</p>
       </div>
       {/* <YesNoBtn fntn={() => restoreOneFromTrash(id)} /> */}
-      <CreateCancel handleFunction={() => restoreOneFromTrash(id)} />
+      <CreateCancel handleFunction={() => restoreOneFromTrash(id)} confirm="Restore" />
     </>
   )
 }
@@ -72,9 +71,11 @@ function RestoreSelectAllConfirm() {
   const { clicked, restoreFromTrash } = useGlobalContext()
   return (
     <>
-      <p>Restore selected {clicked} Item&nbsp;?</p>
+      <center>
+        <p>Restore selected {clicked} Item&nbsp;?</p>
+      </center>
       {/* <YesNoBtn fntn={restoreFromTrash} /> */}
-      <CreateCancel handleFunction={restoreFromTrash} />
+      <CreateCancel handleFunction={restoreFromTrash} confirm="Restore" />
     </>
   )
 }
@@ -83,7 +84,9 @@ function TrashSelectAllConfirm() {
   const { clicked, moveToTrash } = useGlobalContext()
   return (
     <>
-      <p>Remove selected {clicked} Item&nbsp;?</p>
+      <center>
+        <p>Remove selected {clicked} Item&nbsp;?</p>
+      </center>
       {/* <YesNoBtn fntn={moveToTrash} /> */}
       <CreateCancel handleFunction={moveToTrash} confirm="Remove" />
     </>
@@ -94,9 +97,11 @@ function DeleteSelectAllConfirm() {
   const { clicked, deleteFromTrash } = useGlobalContext()
   return (
     <>
-      <p>Parmanent delete selected {clicked} Item?</p>
+      <center>
+        <p>Parmanent delete selected {clicked} Item?</p>
+      </center>
       {/* <YesNoBtn fntn={deleteFromTrash} /> */}
-      <CreateCancel handleFunction={deleteFromTrash} />
+      <CreateCancel handleFunction={deleteFromTrash} confirm="Delete" />
     </>
   )
 }
