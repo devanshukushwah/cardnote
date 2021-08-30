@@ -200,7 +200,7 @@ function Landing() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const check = checkboxRef.current.checked
+    const check = checkboxRef?.current?.checked
     if (!check) {
       window.addEventListener("unload", () => localStorage.clear())
     }

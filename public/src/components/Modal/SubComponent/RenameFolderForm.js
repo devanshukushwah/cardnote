@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useGlobalContext } from "../../../contextAPI/useContext"
 import CreateCancel from "../../CreateCancel/CreateCancel"
+import styles from "./Form.module.scss"
 
 function RenameFolderForm() {
   const { renameFolderFromServer, folders, contextMenuCordinate } = useGlobalContext()
@@ -23,12 +24,12 @@ function RenameFolderForm() {
         <p>Rename Folder</p>
       </div>
       <div className="underline" />
-      <div className="modal-container active">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <input type="text" placeholder="New title" ref={titleRef} autoFocus onFocus={(e) => e.target.select()} />
-          <CreateCancel confirm={"Edit"} />
-        </form>
-      </div>
+      {/* <div className="modal-container active"> */}
+      <form className={styles.form} onSubmit={(e) => handleSubmit(e)}>
+        <input type="text" placeholder="New title" ref={titleRef} autoFocus onFocus={(e) => e.target.select()} />
+        <CreateCancel confirm={"Edit"} />
+      </form>
+      {/* </div> */}
     </>
   )
 }
