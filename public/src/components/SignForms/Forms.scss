@@ -1,6 +1,8 @@
 @import "../../scssVariblesFunction.scss";
 .bgColor {
   position: fixed;
+  top: 0;
+  left: 0;
   @include hw(100vh, 100vw);
   background-color: rgba(0, 0, 0, 0.5);
 }
