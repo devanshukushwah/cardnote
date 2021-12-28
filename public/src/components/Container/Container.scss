@@ -60,7 +60,7 @@ main.Cardnote-container {
       gap: 4px;
       cursor: pointer;
       position: relative;
-      @include popAnimation();
+      // @include popAnimation();
       // width: inherit;
       .icon {
         @include flex;
@@ -104,7 +104,7 @@ main.Cardnote-container {
       @include flex;
       gap: 4px;
       position: relative;
-      @include popAnimation();
+      // @include popAnimation();
       &:active {
         @include cardshadow;
       }
